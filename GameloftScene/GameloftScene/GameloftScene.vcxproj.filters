@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Core">
+      <UniqueIdentifier>{b13956a1-ae0e-4c37-8642-75a215363e4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Utils">
+      <UniqueIdentifier>{3e36d5c6-0c90-4570-bc27-424989431b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Core">
+      <UniqueIdentifier>{41028ca4-c1b7-4e81-90e2-3e07a8aaed85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Application">
+      <UniqueIdentifier>{4962e352-dcab-498b-9c0a-24c5c4b91b73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Application">
+      <UniqueIdentifier>{fc15ff90-da5c-4342-b6f2-fb7704af67a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Scene">
+      <UniqueIdentifier>{e938af8a-f168-4c77-9f83-1618c8b5947e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\GameloftScene.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_application.cpp">
+      <Filter>Archivos de origen\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_driver.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\pkn_defines.h">
+      <Filter>Archivos de encabezado\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_prerequiites.h">
+      <Filter>Archivos de encabezado\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_types.h">
+      <Filter>Archivos de encabezado\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_driver.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_application.h">
+      <Filter>Archivos de encabezado\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_module.h">
+      <Filter>Archivos de encabezado\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
