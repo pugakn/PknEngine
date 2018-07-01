@@ -9,15 +9,13 @@ namespace pugaknSDK {
     glutInitWindowSize(1080, 720);
     glutCreateWindow("Pugakn GL");
 
-    //glEnable(GL_DEPTH_TEST);
-    //glClearDepth(1.0f);
-    //glEnable(GL_CULL_FACE);
-    //glCullFace(GL_FRONT);
+    glEnable(GL_DEPTH_TEST);
+    glClearDepth(1.0f);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
 
     glutDisplayFunc(displayFunction);
     glutMainLoop();
-
-
   }
   void Driver::Clear()
   {

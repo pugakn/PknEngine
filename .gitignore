@@ -1,0 +1,7 @@
+*.obj
+*.tlog
+*.log
+/GameloftScene/.vs/GameloftScene/v15
+/GameloftScene/Intermediate/GameloftScene
+/GameloftScene/Bin/x86/GameloftScened.ilk
+/GameloftScene/Bin/x86/GameloftScened.pdb
