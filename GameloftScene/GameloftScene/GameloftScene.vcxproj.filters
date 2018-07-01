@@ -31,6 +31,18 @@
     <Filter Include="Archivos de encabezado\Scene">
       <UniqueIdentifier>{e938af8a-f168-4c77-9f83-1618c8b5947e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Scene">
+      <UniqueIdentifier>{cad1573d-1a68-4ac0-9bd7-2d94251133e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Engine">
+      <UniqueIdentifier>{7513f794-86f9-4c27-85da-bac544c8de83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Engine">
+      <UniqueIdentifier>{e78a1244-4fc3-4f65-892f-8aa92e831d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Engine\Resources">
+      <UniqueIdentifier>{9bc9d797-956d-4b59-a575-8678898b0de7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameloftScene.cpp">
@@ -41,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Source\pkn_driver.cpp">
       <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_triangle.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_resource_manager.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +78,27 @@
       <Filter>Archivos de encabezado\Application</Filter>
     </ClInclude>
     <ClInclude Include="Include\pkn_module.h">
+      <Filter>Archivos de encabezado\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_triangle.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_resource_manager.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_game_object.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_mesh.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_texture.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_shader.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_time.h">
       <Filter>Archivos de encabezado\Utils</Filter>
     </ClInclude>
   </ItemGroup>

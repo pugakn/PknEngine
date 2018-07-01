@@ -22,13 +22,22 @@
     <ClCompile Include="Source\GameloftScene.cpp" />
     <ClCompile Include="Source\pkn_application.cpp" />
     <ClCompile Include="Source\pkn_driver.cpp" />
+    <ClCompile Include="Source\pkn_resource_manager.cpp" />
+    <ClCompile Include="Source\pkn_triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\pkn_application.h" />
     <ClInclude Include="Include\pkn_defines.h" />
     <ClInclude Include="Include\pkn_driver.h" />
+    <ClInclude Include="Include\pkn_game_object.h" />
+    <ClInclude Include="Include\pkn_mesh.h" />
     <ClInclude Include="Include\pkn_module.h" />
     <ClInclude Include="Include\pkn_prerequiites.h" />
+    <ClInclude Include="Include\pkn_resource_manager.h" />
+    <ClInclude Include="Include\pkn_shader.h" />
+    <ClInclude Include="Include\pkn_texture.h" />
+    <ClInclude Include="Include\pkn_time.h" />
+    <ClInclude Include="Include\pkn_triangle.h" />
     <ClInclude Include="Include\pkn_types.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -118,7 +127,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Lib\$(PlatformTarget);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glut.lib;glewd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;glut.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +143,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Lib\$(PlatformTarget);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glut.lib;glewd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew.lib;glut.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,7 +163,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Lib\$(PlatformTarget);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32d.lib;glut.lib;glew.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glut.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -174,7 +183,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Lib\$(PlatformTarget);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glut.lib;glew.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glut.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

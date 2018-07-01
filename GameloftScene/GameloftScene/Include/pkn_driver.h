@@ -7,12 +7,13 @@ namespace pugaknSDK {
   {
   public:
     ~Driver() = default;
+    Driver() = default;
 
     void Init(Int32 argc, char** argv, Callback displayFunction);
     void Clear(); //TODO: Color param
     void SwapBuffers();
     void Destroy();
-  private:
-    Driver() = default;
+
+    Int32 m_hwnd;
   };
 }

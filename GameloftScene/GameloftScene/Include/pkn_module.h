@@ -5,9 +5,11 @@ namespace pugaknSDK {
   {
   public:
     static T Instance() {
+      PKN_ASSERT(__Var())
       return *__Var();
     };
     static T* InstancePtr() {
+      PKN_ASSERT(__Var())
       return __Var();
     };
     static void StartUp() {
