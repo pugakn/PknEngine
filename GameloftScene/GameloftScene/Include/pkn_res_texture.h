@@ -1,8 +1,8 @@
 #pragma once
-#include <string>
-#pragma once
 #include "pkn_prerequiites.h"
+#include <string>
 #include "pkn_resource_manager.h"
+#include "pkn_texture.h"
 
 namespace pugaknSDK {
   class TextureResource : public Resource {
@@ -14,7 +14,8 @@ namespace pugaknSDK {
     int m_size;
     std::vector<unsigned char> m_pixels;
 
-    //std::shared_ptr<Texture> m_GFXTexture;
+
+    Texture m_texture;
   };
   class TextureResourceFactory : public ResourceFactory {
   public:

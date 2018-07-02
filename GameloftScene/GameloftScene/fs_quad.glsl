@@ -8,8 +8,8 @@ varying vec4 Pos;
 uniform sampler2D tex0;
 
 void main(){
-	//gl_FragColor = texture2D(tex0,vecUVCoords);
-	gl_FragColor = vec4(1,0,1,1);
+	gl_FragColor = texture2D(tex0,vecUVCoords);
+	//gl_FragColor = vec4(1,0,1,1);
 }
 
 

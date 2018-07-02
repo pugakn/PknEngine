@@ -42,6 +42,8 @@ namespace pugaknSDK {
 
     m_attributes.position = glGetAttribLocation(m_program, "Position");
     m_attributes.coords = glGetAttribLocation(m_program, "Coords");
+
+    m_textures.tex0 = glGetUniformLocation(m_program, "tex0");
   }
 
   void Shader::Bind(Int32 stride)

@@ -7,7 +7,7 @@ namespace pugaknSDK {
   void ResourceManager::Init()
   {
     Instance().m_foctories.push_back(std::move(std::make_unique<ShaderResourceFactory>()));
-    //Instance().m_foctories.push_back(std::move(std::make_unique<TextureResourceFactory>()));
+    Instance().m_foctories.push_back(std::move(std::make_unique<TextureResourceFactory>()));
 
     for (auto &it : Instance().m_foctories) {
       it->Init();

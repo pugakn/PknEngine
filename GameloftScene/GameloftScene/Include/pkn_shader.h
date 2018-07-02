@@ -11,5 +11,11 @@ namespace pugaknSDK {
       Int32 position;
       Int32 coords;
     } m_attributes;
+    struct {
+      Int32 tex0;
+      Int32 tex1;
+      Int32 tex2;
+      Int32 tex3;
+    } m_textures;
   };
 }

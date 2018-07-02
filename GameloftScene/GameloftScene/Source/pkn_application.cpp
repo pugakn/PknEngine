@@ -16,6 +16,7 @@ namespace pugaknSDK {
     ResourceManager::Init();
 
     ResourceManager::LoadResource("vs_quad.glsl");
+    ResourceManager::LoadResource("test.tga");
 
     m_triangle.Init();
 

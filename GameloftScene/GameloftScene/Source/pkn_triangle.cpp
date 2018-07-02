@@ -2,6 +2,8 @@
 #include "pkn_resource_manager.h"
 #include "pkn_shader.h"
 #include "pkn_res_shader.h"
+#include "pkn_texture.h"
+#include "pkn_res_texture.h"
 namespace pugaknSDK {
   void Triangle::Init()
   {
@@ -33,7 +35,11 @@ namespace pugaknSDK {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
 
     auto shader = ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader;
+    auto texture = ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture;
+    
     shader.Bind(sizeof(Vertex));
+    texture.Bind(shader.m_textures.tex0,0);
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
   }
   void Triangle::Destroy()
