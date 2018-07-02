@@ -13,7 +13,7 @@ namespace pugaknSDK {
     void Draw();
     void Destroy();
   private:
-    Int32 m_index[6];
+    UInt16 m_index[6];
     Vertex m_vertex[4];
 
     GLuint m_VB;

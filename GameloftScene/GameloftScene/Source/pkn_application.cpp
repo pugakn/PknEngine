@@ -1,6 +1,7 @@
 #include "pkn_application.h"
 #include <GLUT/glut.h>
 #include <iostream>
+#include "pkn_resource_manager.h"
 namespace pugaknSDK {
   void Application::DisplayFunction()
   {
@@ -11,6 +12,11 @@ namespace pugaknSDK {
   {
     Driver::StartUp();
     Driver::Instance().Init(argc,argv,&Application::DisplayFunction);
+    ResourceManager::StartUp();
+    ResourceManager::Init();
+
+    ResourceManager::LoadResource("vs_quad.glsl");
+
     m_triangle.Init();
 
     glutDisplayFunc(&Application::DisplayFunction);

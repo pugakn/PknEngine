@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
+#include "pkn_module.h"
 namespace pugaknSDK {
   class Resource {
   public:
@@ -15,12 +16,17 @@ namespace pugaknSDK {
     virtual Resource* Load(std::string path) = 0;
     virtual bool IsCompatible(std::string ext) = 0;
     virtual std::shared_ptr<Resource> GetDefaultResource() { return m_defaultResource; }
-    virtual ~ResourceFactory() {};
+
+    explicit ResourceFactory() = default;
+    ResourceFactory(ResourceFactory&&) = default;
+    ResourceFactory(const ResourceFactory&) = delete;
+    ResourceFactory& operator=(const ResourceFactory&) = delete;
+    virtual ~ResourceFactory() = default;
   protected:
     std::shared_ptr<Resource> m_defaultResource;
   };
 
-  class ResourceManager {
+  class ResourceManager : public Module<ResourceManager> {
   private:
     using FactoryPtr = std::unique_ptr<ResourceFactory>;
   public:
@@ -37,9 +43,6 @@ namespace pugaknSDK {
     static SharedResource LoadResource(std::string path);
     static bool IsLoaded(std::string path);
   private:
-    static ResourceManager* Instance();
-    static ResourceManager* m_instance;
-
     std::vector<FactoryPtr> m_foctories;
     std::unordered_map<std::string, SharedResource> m_resources;
   };

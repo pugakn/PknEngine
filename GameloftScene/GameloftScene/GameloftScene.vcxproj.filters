@@ -43,6 +43,9 @@
     <Filter Include="Archivos de encabezado\Engine\Resources">
       <UniqueIdentifier>{9bc9d797-956d-4b59-a575-8678898b0de7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Engine\Resources">
+      <UniqueIdentifier>{2b81ae6b-c531-4826-aa1a-18611c3e9543}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameloftScene.cpp">
@@ -59,6 +62,24 @@
     </ClCompile>
     <ClCompile Include="Source\pkn_resource_manager.cpp">
       <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_shader.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_texture.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_res_shader.cpp">
+      <Filter>Archivos de origen\Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_res_texture.cpp">
+      <Filter>Archivos de origen\Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_game_object.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_mesh.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="Include\pkn_time.h">
       <Filter>Archivos de encabezado\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_res_shader.h">
+      <Filter>Archivos de encabezado\Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_res_texture.h">
+      <Filter>Archivos de encabezado\Engine\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
