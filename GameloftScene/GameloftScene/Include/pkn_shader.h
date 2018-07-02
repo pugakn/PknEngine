@@ -9,6 +9,7 @@ namespace pugaknSDK {
     UInt32 m_program;
     struct {
       Int32 position;
+      Int32 normal;
       Int32 coords;
     } m_attributes;
     struct {

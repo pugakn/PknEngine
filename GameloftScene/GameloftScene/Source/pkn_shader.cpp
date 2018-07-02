@@ -41,9 +41,13 @@ namespace pugaknSDK {
     glUseProgram(m_program);
 
     m_attributes.position = glGetAttribLocation(m_program, "Position");
+    m_attributes.normal = glGetAttribLocation(m_program, "Normal");
     m_attributes.coords = glGetAttribLocation(m_program, "Coords");
 
     m_textures.tex0 = glGetUniformLocation(m_program, "tex0");
+    m_textures.tex1 = glGetUniformLocation(m_program, "tex1");
+    m_textures.tex2 = glGetUniformLocation(m_program, "tex2");
+    m_textures.tex3 = glGetUniformLocation(m_program, "tex3");
   }
 
   void Shader::Bind(Int32 stride)

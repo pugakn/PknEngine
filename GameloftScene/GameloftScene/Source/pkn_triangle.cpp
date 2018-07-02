@@ -26,7 +26,7 @@ namespace pugaknSDK {
 
     glGenBuffers(1, &m_IB);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned short), m_index, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(UInt32), m_index, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   }
   void Triangle::Draw()
@@ -40,7 +40,7 @@ namespace pugaknSDK {
     shader.Bind(sizeof(Vertex));
     texture.Bind(shader.m_textures.tex0,0);
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
   }
   void Triangle::Destroy()
   {

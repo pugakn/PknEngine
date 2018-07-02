@@ -45,5 +45,10 @@ namespace pugaknSDK {
   private:
     std::vector<FactoryPtr> m_foctories;
     std::unordered_map<std::string, SharedResource> m_resources;
+
+  private:
+    //Private constructor as this is a Module class
+    friend class Module<ResourceManager>;
+    ResourceManager() = default;
   };
 }

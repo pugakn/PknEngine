@@ -8,7 +8,6 @@ namespace pugaknSDK {
   //Module Class
   class Application : public Module<Application> {
   public:
-    Application() = default;
     ~Application() = default;
     void Init(Int32 argc, char** argv);
     void Update();
@@ -19,5 +18,10 @@ namespace pugaknSDK {
     static void DisplayFunction();
 
     Triangle m_triangle;
+
+  private:
+    //Private constructor as this is a Module class
+    friend class Module<Application>;
+    Application() = default;
   };
 }

@@ -2,7 +2,7 @@
 #include <iostream>;
 namespace pugaknSDK {
   //Use this as a Singleton class template 
-  //EXAMPLE: MyClass : Public Module<MyClass>
+  //Usage: MyClass : Public Module<MyClass>
   template <typename T>
   class Module
   {
