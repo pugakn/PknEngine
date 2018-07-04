@@ -10,6 +10,6 @@ uniform mat4 WorldView;
 
 void main(){
 	vecUVCoords = Coords;	
-	Pos = Position;
+	Pos = WVP * Position;
 	gl_Position = Pos;
 }

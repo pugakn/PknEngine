@@ -1,6 +1,7 @@
 #include "pkn_shader.h"
 #include <GL\glew.h>
 #include <iostream>
+#include "pkn_camera.h"
 namespace pugaknSDK {
   void checkcompilederrors(GLuint shader, GLenum type) {
     GLint bShaderCompiled;
@@ -48,11 +49,23 @@ namespace pugaknSDK {
     m_textures.tex1 = glGetUniformLocation(m_program, "tex1");
     m_textures.tex2 = glGetUniformLocation(m_program, "tex2");
     m_textures.tex3 = glGetUniformLocation(m_program, "tex3");
+
+    m_uniforms.World = glGetUniformLocation(m_program, "World");
+    m_uniforms.WorldView = glGetUniformLocation(m_program, "WorldView");
+    m_uniforms.WVP = glGetUniformLocation(m_program, "WVP");
   }
 
   void Shader::Bind(Int32 stride)
   {
     glUseProgram(m_program);
+    Camera& mCam = CameraManager::Instance().GetMainCamera();
+    Matrix4D world;
+    Matrix4D wordView = mCam.m_view;
+    Matrix4D WVP = mCam.m_vp;
+    world = Identity();
+    glUniformMatrix4fv(m_uniforms.World, 1, GL_FALSE, &world.m[0][0]);
+    glUniformMatrix4fv(m_uniforms.WorldView, 1, GL_FALSE, &wordView.m[0][0]);
+    glUniformMatrix4fv(m_uniforms.WVP, 1, GL_FALSE, &WVP.m[0][0]);
 
     glEnableVertexAttribArray(m_attributes.position);
     glVertexAttribPointer(m_attributes.position, 4, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(0));

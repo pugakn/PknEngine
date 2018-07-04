@@ -1,11 +1,11 @@
-#include "pkn_triangle.h"
+#include "pkn_quad.h"
 #include "pkn_resource_manager.h"
 #include "pkn_shader.h"
 #include "pkn_res_shader.h"
 #include "pkn_texture.h"
 #include "pkn_res_texture.h"
 namespace pugaknSDK {
-  void Triangle::Init()
+  void Quad::Init()
   {
     m_vertex[0] = { -1.0f,  1.0f, 0.0f, 1.0f,  0.0f, 0.0f }; //Top-Left
     m_vertex[1] = { -1.0f, -1.0f, 0.0f, 1.0f,  0.0f, 1.0f }; //Bootom-Left
@@ -29,7 +29,7 @@ namespace pugaknSDK {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(UInt32), m_index, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   }
-  void Triangle::Draw()
+  void Quad::Draw()
   {
     glBindBuffer(GL_ARRAY_BUFFER, m_VB);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
@@ -42,7 +42,7 @@ namespace pugaknSDK {
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
   }
-  void Triangle::Destroy()
+  void Quad::Destroy()
   {
 
   }

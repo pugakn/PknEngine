@@ -7,7 +7,7 @@ namespace pugaknSDK {
     float v1,v2, v3, v4;
     float t1, t2;
   };
-  class Triangle {
+  class Quad {
   public:
     void Init();
     void Draw();

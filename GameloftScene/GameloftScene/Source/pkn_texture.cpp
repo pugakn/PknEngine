@@ -60,6 +60,9 @@ namespace pugaknSDK {
 
     glBindTexture(GL_TEXTURE_2D, 0);
   }
+  void Texture::CreateCompressedFromMemory(byte * _buffer, Int32 _w, Int32 _h, Int32 _channels)
+  {
+  }
   void Texture::Bind(Int32 _loc, Int32 _index)
   {
     glActiveTexture(GL_TEXTURE0 + _index);

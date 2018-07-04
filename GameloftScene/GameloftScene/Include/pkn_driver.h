@@ -1,5 +1,6 @@
 #pragma once
 #include "pkn_prerequiites.h"
+#include <string>
 #include "pkn_module.h"
 namespace pugaknSDK {
   //Module Class do not instantiate!
@@ -19,6 +20,8 @@ namespace pugaknSDK {
     //Deallocate memory
     void Destroy();
 
+
+    void Screenshot(std::string path);
 
     //Window handler
     Int32 m_hwnd;

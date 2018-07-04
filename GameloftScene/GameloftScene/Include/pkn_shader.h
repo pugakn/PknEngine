@@ -18,5 +18,10 @@ namespace pugaknSDK {
       Int32 tex2;
       Int32 tex3;
     } m_textures;
+    struct {
+      Int32 World;
+      Int32 WorldView;
+      Int32 WVP;
+    } m_uniforms;
   };
 }
