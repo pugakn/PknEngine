@@ -93,6 +93,12 @@
     <ClCompile Include="Source\pkn_time.cpp">
       <Filter>Archivos de origen\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\pkn_cube.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_sphere.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\pkn_defines.h">
@@ -144,6 +150,15 @@
       <Filter>Archivos de encabezado\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Include\pkn_light.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_cube.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_sphere.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_renderable.h">
       <Filter>Archivos de encabezado\Scene</Filter>
     </ClInclude>
   </ItemGroup>

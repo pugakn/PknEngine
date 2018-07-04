@@ -70,6 +70,7 @@ namespace pugaknSDK {
     ResourceManager::LoadResource("test.tga");
 
     m_triangle.Init();
+    m_cube.Init();
     m_keyStates.resize(KEYS::COUNT);
 
     glutReshapeFunc(&Application::ReshapeFunc);
@@ -107,7 +108,8 @@ namespace pugaknSDK {
   void Application::Draw()
   {
     Driver::Instance().Clear();
-    m_triangle.Draw();
+    m_triangle.Draw(Identity());
+    m_cube.Draw(Identity());
     Driver::Instance().SwapBuffers();
   }
   void Application::OnMouseClick(Int32 _button, Int32 _state, Int32 _x, Int32 _y)

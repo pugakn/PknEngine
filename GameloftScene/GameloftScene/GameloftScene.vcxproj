@@ -22,6 +22,7 @@
     <ClCompile Include="Source\GameloftScene.cpp" />
     <ClCompile Include="Source\pkn_application.cpp" />
     <ClCompile Include="Source\pkn_camera.cpp" />
+    <ClCompile Include="Source\pkn_cube.cpp" />
     <ClCompile Include="Source\pkn_driver.cpp" />
     <ClCompile Include="Source\pkn_game_object.cpp" />
     <ClCompile Include="Source\pkn_light.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="Source\pkn_res_shader.cpp" />
     <ClCompile Include="Source\pkn_res_texture.cpp" />
     <ClCompile Include="Source\pkn_shader.cpp" />
+    <ClCompile Include="Source\pkn_sphere.cpp" />
     <ClCompile Include="Source\pkn_texture.cpp" />
     <ClCompile Include="Source\pkn_quad.cpp" />
     <ClCompile Include="Source\pkn_time.cpp" />
@@ -37,6 +39,7 @@
   <ItemGroup>
     <ClInclude Include="Include\pkn_application.h" />
     <ClInclude Include="Include\pkn_camera.h" />
+    <ClInclude Include="Include\pkn_cube.h" />
     <ClInclude Include="Include\pkn_defines.h" />
     <ClInclude Include="Include\pkn_driver.h" />
     <ClInclude Include="Include\pkn_game_object.h" />
@@ -44,10 +47,12 @@
     <ClInclude Include="Include\pkn_mesh.h" />
     <ClInclude Include="Include\pkn_module.h" />
     <ClInclude Include="Include\pkn_prerequiites.h" />
+    <ClInclude Include="Include\pkn_renderable.h" />
     <ClInclude Include="Include\pkn_resource_manager.h" />
     <ClInclude Include="Include\pkn_res_shader.h" />
     <ClInclude Include="Include\pkn_res_texture.h" />
     <ClInclude Include="Include\pkn_shader.h" />
+    <ClInclude Include="Include\pkn_sphere.h" />
     <ClInclude Include="Include\pkn_texture.h" />
     <ClInclude Include="Include\pkn_time.h" />
     <ClInclude Include="Include\pkn_quad.h" />

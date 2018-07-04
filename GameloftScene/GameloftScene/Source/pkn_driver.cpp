@@ -38,7 +38,7 @@ namespace pugaknSDK {
     //}
 
     const unsigned char *version = glGetString(GL_SHADING_LANGUAGE_VERSION);
-    std::cout << "GLSL Ver: " << version << std::endl;
+    std::cout << "GLSL Version: " << version << std::endl;
 
     glEnable(GL_DEPTH_TEST);
     glClearDepth(1.0f);
@@ -48,7 +48,7 @@ namespace pugaknSDK {
     auto w = glutGet(GLUT_WINDOW_WIDTH);
     auto h = glutGet(GLUT_WINDOW_HEIGHT);
     glutWarpPointer(w / 2.0f, h / 2.0f);
-    glutSetCursor(GLUT_CURSOR_NONE);
+    //glutSetCursor(GLUT_CURSOR_NONE);
   }
   void Driver::Clear()
   {

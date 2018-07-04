@@ -5,6 +5,7 @@
 #include "pkn_module.h"
 
 #include "pkn_quad.h"
+#include "pkn_cube.h"
 #include "pkn_camera.h"
 namespace pugaknSDK {
   namespace KEYS {
@@ -43,6 +44,7 @@ namespace pugaknSDK {
     static void ReshapeFunc(Int32 _w , Int32 _h);
     static void IdleFunction();
     Quad m_triangle;
+    Cube m_cube;
   private:
     //Private constructor as this is a Module class
     std::vector<bool> m_keyStates;

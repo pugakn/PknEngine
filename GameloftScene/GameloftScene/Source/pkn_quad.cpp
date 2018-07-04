@@ -29,7 +29,7 @@ namespace pugaknSDK {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(UInt32), m_index, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   }
-  void Quad::Draw()
+  void Quad::Draw(const Matrix4D& transform)
   {
     glBindBuffer(GL_ARRAY_BUFFER, m_VB);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
