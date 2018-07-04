@@ -29,12 +29,18 @@ namespace pugaknSDK {
     void OnMouseMove(Int32 _x, Int32 _y);
     void OnKeyboardPressed(Int32 _code, Int32 _x, Int32 _y);
     void OnKeyboardReleased(Int32 _code, Int32 _x, Int32 _y);
+    void OnKeyboardAsciiPressed(unsigned char _code, Int32 _x, Int32 _y);
+    void OnKeyboardAsciiReleased(unsigned char _code, Int32 _x, Int32 _y);
+    void OnResize(Int32 _w, Int32 _h);
     
     static void DisplayFunction();
     static void MouseFunction(Int32 _button, Int32 _state, Int32 _x, Int32 _y);
     static void MousePasiveMotionFunction(Int32 _x, Int32 _y);
     static void KeyboardFunction(Int32 _code, Int32 _x, Int32 _y);
     static void KeyboardUpFunction(Int32 _code, Int32 _x, Int32 _y);
+    static void KeyboardAsciiFunction(unsigned char _code, Int32 _x, Int32 _y);
+    static void KeyboardUpAsciiFunction(unsigned char _code, Int32 _x, Int32 _y);
+    static void ReshapeFunc(Int32 _w , Int32 _h);
     static void IdleFunction();
     Quad m_triangle;
   private:

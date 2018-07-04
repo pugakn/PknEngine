@@ -44,6 +44,11 @@ namespace pugaknSDK {
     glClearDepth(1.0f);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
+
+    auto w = glutGet(GLUT_WINDOW_WIDTH);
+    auto h = glutGet(GLUT_WINDOW_HEIGHT);
+    glutWarpPointer(w / 2.0f, h / 2.0f);
+    glutSetCursor(GLUT_CURSOR_NONE);
   }
   void Driver::Clear()
   {

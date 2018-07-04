@@ -11,6 +11,7 @@ namespace pugaknSDK {
   public:
     void Init();
     void Update();
+    void Resize(Int32 _w, Int32 _h);
     void Camera::TraslateFront(float _velocity);
     void Camera::TraslateSide(float _velocity);
     void Camera::RotateX(float _rotation);

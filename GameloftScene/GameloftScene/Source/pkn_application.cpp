@@ -30,6 +30,22 @@ namespace pugaknSDK {
     Instance().OnKeyboardReleased(_code, _x, _y);
   }
 
+  void Application::KeyboardAsciiFunction(unsigned char _code, Int32 _x, Int32 _y)
+  {
+    Instance().OnKeyboardAsciiPressed(_code, _x, _y);
+  }
+
+  void Application::KeyboardUpAsciiFunction(unsigned char _code, Int32 _x, Int32 _y)
+  {
+    Instance().OnKeyboardAsciiReleased(_code, _x, _y);
+  }
+
+  void Application::ReshapeFunc(Int32 _w, Int32 _h)
+  {
+    glViewport(0, 0, _w, _h);
+    Instance().OnResize(_w,_h);
+  }
+
   void Application::IdleFunction()
   {
     Time::Update();
@@ -46,6 +62,9 @@ namespace pugaknSDK {
     ResourceManager::Init();
     CameraManager::StartUp();
     CameraManager::Instance().Init();
+    auto w = glutGet(GLUT_WINDOW_WIDTH);
+    auto h = glutGet(GLUT_WINDOW_HEIGHT);
+    CameraManager::Instance().GetMainCamera().Resize(w, h);
 
     ResourceManager::LoadResource("vs_quad.glsl");
     ResourceManager::LoadResource("test.tga");
@@ -53,9 +72,11 @@ namespace pugaknSDK {
     m_triangle.Init();
     m_keyStates.resize(KEYS::COUNT);
 
-
+    glutReshapeFunc(&Application::ReshapeFunc);
     glutSpecialFunc(&Application::KeyboardFunction);
     glutSpecialUpFunc(&Application::KeyboardUpFunction);
+    glutKeyboardFunc(&Application::KeyboardAsciiFunction);
+    glutKeyboardUpFunc(&Application::KeyboardUpAsciiFunction);
     glutMouseFunc(&Application::MouseFunction);
     glutPassiveMotionFunc(&Application::MousePasiveMotionFunction);
     glutDisplayFunc(&Application::DisplayFunction);
@@ -94,24 +115,31 @@ namespace pugaknSDK {
   }
   void Application::OnMouseMove(Int32 _x, Int32 _y)
   {
+    Camera& mCam = CameraManager::Instance().GetMainCamera();
+    auto w = glutGet(GLUT_WINDOW_WIDTH);
+    auto h = glutGet(GLUT_WINDOW_HEIGHT);
+    Vector3D mRot(_x/(float)w,_y/(float)h,0);
+    mCam.RotateY(-(mRot.x * 2 - 1));
+    mCam.RotateX(-(mRot.y * 2 - 1));
+    mCam.Update();
   }
   void Application::OnKeyboardPressed(Int32 _code, Int32 _x, Int32 _y)
   {
-      switch (_code)
-      {
-      case GLUT_KEY_UP:
-        m_keyStates[KEYS::UP] = true;
-        break;
-      case GLUT_KEY_DOWN:
-        m_keyStates[KEYS::DOWN] = true;
-        break;
-      case GLUT_KEY_LEFT:
-        m_keyStates[KEYS::LEFT] = true;
-        break;
-      case GLUT_KEY_RIGHT:
-        m_keyStates[KEYS::RIGHT] = true;
-        break;
-      } 
+    switch (_code)
+    {
+    case GLUT_KEY_UP:
+      m_keyStates[KEYS::UP] = true;
+      break;
+    case GLUT_KEY_DOWN:
+      m_keyStates[KEYS::DOWN] = true;
+      break;
+    case GLUT_KEY_LEFT:
+      m_keyStates[KEYS::LEFT] = true;
+      break;
+    case GLUT_KEY_RIGHT:
+      m_keyStates[KEYS::RIGHT] = true;
+      break;
+    } 
   }
   void Application::OnKeyboardReleased(Int32 _code, Int32 _x, Int32 _y)
   {
@@ -130,6 +158,46 @@ namespace pugaknSDK {
       m_keyStates[KEYS::RIGHT] = false;
       break;
     }
+  }
+  void Application::OnKeyboardAsciiPressed(unsigned char _code, Int32 _x, Int32 _y)
+  {
+    switch (_code)
+    {
+    case 'w':
+      m_keyStates[KEYS::UP] = true;
+      break;
+    case 's':
+      m_keyStates[KEYS::DOWN] = true;
+      break;
+    case 'a':
+      m_keyStates[KEYS::LEFT] = true;
+      break;
+    case 'd':
+      m_keyStates[KEYS::RIGHT] = true;
+      break;
+    }
+  }
+  void Application::OnKeyboardAsciiReleased(unsigned char _code, Int32 _x, Int32 _y)
+  {
+    switch (_code)
+    {
+    case 'w':
+      m_keyStates[KEYS::UP] = false;
+      break;
+    case 's':
+      m_keyStates[KEYS::DOWN] = false;
+      break;
+    case 'a':
+      m_keyStates[KEYS::LEFT] = false;
+      break;
+    case 'd':
+      m_keyStates[KEYS::RIGHT] = false;
+      break;
+    }
+  }
+  void Application::OnResize(Int32 _w, Int32 _h)
+  {
+    CameraManager::Instance().GetMainCamera().Resize(_w,_h);
   }
   void Application::Destroy()
   {
