@@ -1,5 +1,4 @@
 #include "pkn_driver.h"
-#include <GL\glew.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -49,6 +48,11 @@ namespace pugaknSDK {
     auto h = glutGet(GLUT_WINDOW_HEIGHT);
     glutWarpPointer(w / 2.0f, h / 2.0f);
     //glutSetCursor(GLUT_CURSOR_NONE);
+
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_FBO);
+    for (int i = 0; i < 16; i++) {
+      m_drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
+    }
   }
   void Driver::Clear()
   {
@@ -62,5 +66,12 @@ namespace pugaknSDK {
   void Driver::Destroy()
   {
     glutDestroyWindow(m_hwnd);
+  }
+  void Driver::BindBackBufferFBO()
+  {
+    auto w = glutGet(GLUT_WINDOW_WIDTH);
+    auto h = glutGet(GLUT_WINDOW_HEIGHT);
+    glViewport(0, 0, w, h);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
   }
 }

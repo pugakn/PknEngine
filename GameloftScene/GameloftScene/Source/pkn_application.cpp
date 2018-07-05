@@ -4,6 +4,8 @@
 #include <iostream>
 #include "pkn_resource_manager.h"
 #include "pkn_time.h"
+#include "pkn_res_texture.h"
+#include "pkn_res_shader.h"
 namespace pugaknSDK {
   void Application::DisplayFunction()
   {
@@ -66,11 +68,28 @@ namespace pugaknSDK {
     auto h = glutGet(GLUT_WINDOW_HEIGHT);
     CameraManager::Instance().GetMainCamera().Resize(w, h);
 
-    ResourceManager::LoadResource("vs_quad.glsl");
+    ResourceManager::LoadResource("vs_quad.glsl", "fs_quad.glsl");
+    ResourceManager::LoadResource("vs_pvr.glsl", "fs_pvr.glsl");
     ResourceManager::LoadResource("test.tga");
+    m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, 1024, 1024);
+    Driver::Instance().BindBackBufferFBO();
 
-    m_triangle.Init();
+    m_quad.Init();
     m_cube.Init();
+    {
+      Shader* shBase = &ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader;
+      Shader* shShadow = &ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader;
+
+      m_root.AddChild(&m_cube,shShadow);
+      m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.AddChild(&m_quad,shBase);
+      m_root.m_children[1]->SetRotation(Vector3D(90, 0, 0));
+      m_root.m_children[1]->SetScale(Vector3D(100, 100, 100));
+      m_root.m_children[1]->SetPosition(Vector3D(0, -5, 0));
+      m_root.m_children[1]->UpdateTransform();
+    }
+
+
     m_keyStates.resize(KEYS::COUNT);
 
     glutReshapeFunc(&Application::ReshapeFunc);
@@ -108,8 +127,9 @@ namespace pugaknSDK {
   void Application::Draw()
   {
     Driver::Instance().Clear();
-    m_triangle.Draw(Identity());
-    m_cube.Draw(Identity());
+    for (auto &it : m_root.m_children) {
+      it->Draw();
+    }
     Driver::Instance().SwapBuffers();
   }
   void Application::OnMouseClick(Int32 _button, Int32 _state, Int32 _x, Int32 _y)

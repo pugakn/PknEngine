@@ -11,7 +11,7 @@ namespace pugaknSDK {
   class ShaderResourceFactory : public ResourceFactory {
   public:
     void Init() override;
-    Resource* Load(std::string path) override;
+    Resource* Load(std::string path, std::string extraPath = "") override;
     bool IsCompatible(std::string ext) override;
   };
 

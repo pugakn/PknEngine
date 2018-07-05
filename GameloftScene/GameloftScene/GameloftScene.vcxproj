@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Include\pkn_render_target.cpp" />
     <ClCompile Include="Source\GameloftScene.cpp" />
     <ClCompile Include="Source\pkn_application.cpp" />
     <ClCompile Include="Source\pkn_camera.cpp" />
@@ -42,12 +43,14 @@
     <ClInclude Include="Include\pkn_cube.h" />
     <ClInclude Include="Include\pkn_defines.h" />
     <ClInclude Include="Include\pkn_driver.h" />
+    <ClInclude Include="Include\pkn_enums.h" />
     <ClInclude Include="Include\pkn_game_object.h" />
     <ClInclude Include="Include\pkn_light.h" />
     <ClInclude Include="Include\pkn_mesh.h" />
     <ClInclude Include="Include\pkn_module.h" />
     <ClInclude Include="Include\pkn_prerequiites.h" />
     <ClInclude Include="Include\pkn_renderable.h" />
+    <ClInclude Include="Include\pkn_render_target.h" />
     <ClInclude Include="Include\pkn_resource_manager.h" />
     <ClInclude Include="Include\pkn_res_shader.h" />
     <ClInclude Include="Include\pkn_res_texture.h" />

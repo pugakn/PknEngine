@@ -53,24 +53,26 @@ namespace pugaknSDK {
     m_uniforms.World = glGetUniformLocation(m_program, "World");
     m_uniforms.WorldView = glGetUniformLocation(m_program, "WorldView");
     m_uniforms.WVP = glGetUniformLocation(m_program, "WVP");
+    m_uniforms.CameraPosition = glGetUniformLocation(m_program, "CameraPosition");
   }
 
-  void Shader::Bind(Int32 stride)
+  void Shader::Bind(Int32 stride, const Matrix4D& _world)
   {
     glUseProgram(m_program);
     Camera& mCam = CameraManager::Instance().GetMainCamera();
-    Matrix4D world;
-    Matrix4D wordView = mCam.m_view;
-    Matrix4D WVP = mCam.m_vp;
-    world = Identity();
-    glUniformMatrix4fv(m_uniforms.World, 1, GL_FALSE, &world.m[0][0]);
+    Matrix4D wordView = _world * mCam.m_view;
+    Matrix4D WVP = _world * mCam.m_vp;
+    glUniformMatrix4fv(m_uniforms.World, 1, GL_FALSE, &_world.m[0][0]);
     glUniformMatrix4fv(m_uniforms.WorldView, 1, GL_FALSE, &wordView.m[0][0]);
     glUniformMatrix4fv(m_uniforms.WVP, 1, GL_FALSE, &WVP.m[0][0]);
+    glUniform4fv(m_uniforms.CameraPosition, 1, &mCam.m_position.x);
 
     glEnableVertexAttribArray(m_attributes.position);
-    glVertexAttribPointer(m_attributes.position, 4, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(0));
+    glVertexAttribPointer(m_attributes.position, 3, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(0));
+    glEnableVertexAttribArray(m_attributes.normal);
+    glVertexAttribPointer(m_attributes.normal, 3, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(12));
     glEnableVertexAttribArray(m_attributes.coords);
-    glVertexAttribPointer(m_attributes.coords, 2, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(16));
+    glVertexAttribPointer(m_attributes.coords, 2, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(24));
   }
 
 }

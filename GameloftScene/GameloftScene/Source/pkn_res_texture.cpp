@@ -14,10 +14,10 @@ namespace pugaknSDK {
     //ptr->m_size = ptr->m_height * ptr->m_pitch;
     //ptr->m_pixels.assign((unsigned char*)g_chkr.pixel_data, (unsigned char*)g_chkr.pixel_data + ptr->m_size);
   }
-  Resource * TextureResourceFactory::Load(std::string path)
+  Resource * TextureResourceFactory::Load(std::string path, std::string extraPath)
   {
     TextureResource* res = new TextureResource();
-
+    res->m_texture = std::make_unique<Texture>();
     bool found = false;
     std::string basePath = "";
     std::string path_ = basePath;
@@ -46,7 +46,7 @@ namespace pugaknSDK {
     res->m_pixels.assign(buffer, buffer + res->m_size);
 
     stbi_image_free(buffer);
-    res->m_texture.CreateFromMemory(res->m_pixels.data(), res->m_width, res->m_height, res->m_channels);
+    res->m_texture->CreateFromMemory(res->m_pixels.data(), res->m_width, res->m_height, res->m_channels);
     return res;
   }
   bool TextureResourceFactory::IsCompatible(std::string ext)

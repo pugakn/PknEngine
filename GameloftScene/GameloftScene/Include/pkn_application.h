@@ -7,6 +7,8 @@
 #include "pkn_quad.h"
 #include "pkn_cube.h"
 #include "pkn_camera.h"
+#include "pkn_game_object.h"
+#include "pkn_render_target.h"
 namespace pugaknSDK {
   namespace KEYS {
     enum E {
@@ -43,10 +45,13 @@ namespace pugaknSDK {
     static void KeyboardUpAsciiFunction(unsigned char _code, Int32 _x, Int32 _y);
     static void ReshapeFunc(Int32 _w , Int32 _h);
     static void IdleFunction();
-    Quad m_triangle;
+    Quad m_quad;
     Cube m_cube;
   private:
     //Private constructor as this is a Module class
+    GameObject m_root;
+    RenderTarget m_shadowRT;
+
     std::vector<bool> m_keyStates;
     friend class Module<Application>;
     Application() = default;

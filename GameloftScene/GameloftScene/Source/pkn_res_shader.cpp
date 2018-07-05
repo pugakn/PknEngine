@@ -6,7 +6,7 @@ namespace pugaknSDK {
   void ShaderResourceFactory::Init()
   {
   }
-  Resource * ShaderResourceFactory::Load(std::string path)
+  Resource * ShaderResourceFactory::Load(std::string path, std::string extraPath)
   {
     ShaderResource* res = new ShaderResource();
     std::stringstream buffer_vs;
@@ -16,7 +16,7 @@ namespace pugaknSDK {
     buffer_vs << file_vs.rdbuf();
     res->m_source = buffer_vs.str();
 
-    std::ifstream file_fs("fs_quad.glsl");
+    std::ifstream file_fs(extraPath);
     buffer_fs << file_fs.rdbuf();
     std::string fsource = buffer_fs.str();
 

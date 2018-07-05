@@ -34,7 +34,7 @@ namespace pugaknSDK {
     return Instance().LoadResource(path);
   }
 
-  ResourceManager::SharedResource ResourceManager::LoadResource(std::string path)
+  ResourceManager::SharedResource ResourceManager::LoadResource(std::string path , std::string extraPath)
   {
     ResourceManager::SharedResource ret;
     //Already loaded
@@ -46,7 +46,7 @@ namespace pugaknSDK {
       std::size_t pos = path.find(".");
       std::string substr = path.substr(pos);
       if (it->IsCompatible(substr)) {
-        auto ptr = it->Load(path);
+        auto ptr = it->Load(path, extraPath);
         if (ptr) {
           ret = ResourceManager::SharedResource(ptr);
           Instance().m_resources[path] = ret;

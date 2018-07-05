@@ -1,5 +1,4 @@
 #include "pkn_cube.h"
-#include <GL\glew.h>
 #include "pkn_resource_manager.h"
 #include "pkn_res_shader.h"
 #include "pkn_res_texture.h"
@@ -7,40 +6,40 @@ namespace pugaknSDK {
   void Cube::Init()
   {
     // +Y SIDE
-    m_vertex[0] = { -1.0f,  1.0f, -1.0f, 1.0f,  1.0f, 1.0f };
-    m_vertex[1] = { 1.0f,  1.0f, -1.0f, 1.0f,   0.0f, 1.0f };
-    m_vertex[2] = { -1.0f,  1.0f,  1.0f, 1.0f,  1.0f, 0.0f };
-    m_vertex[3] = { 1.0f,  1.0f,  1.0f, 1.0f,   0.0f, 0.0f };
+    m_vertex[0] = { -1.0f,  1.0f, -1.0f,  0.0f, 1.0f, 0.0f,    1.0f, 1.0f };
+    m_vertex[1] = { 1.0f,  1.0f, -1.0f,   0.0f, 1.0f, 0.0f,    0.0f, 1.0f };
+    m_vertex[2] = { -1.0f,  1.0f,  1.0f,  0.0f, 1.0f, 0.0f,    1.0f, 0.0f };
+    m_vertex[3] = { 1.0f,  1.0f,  1.0f,   0.0f, 1.0f, 0.0f,    0.0f, 0.0f };
 
     // -Y SIDE
-    m_vertex[4] = { -1.0f,  -1.0f, -1.0f, 1.0f,  0.0f, 0.0f };
-    m_vertex[5] = { 1.0f,  -1.0f, -1.0f, 1.0f,   1.0f, 0.0f };
-    m_vertex[6] = { -1.0f,  -1.0f,  1.0f, 1.0f,  0.0f, 1.0f };
-    m_vertex[7] = { 1.0f,  -1.0f,  1.0f, 1.0f,   1.0f, 1.0f };
+    m_vertex[4] = { -1.0f,  -1.0f, -1.0f,   0.0f, -1.0f, 0.0f,   0.0f, 0.0f };
+    m_vertex[5] = { 1.0f,  -1.0f, -1.0f,    0.0f, -1.0f, 0.0f,   1.0f, 0.0f };
+    m_vertex[6] = { -1.0f,  -1.0f,  1.0f,   0.0f, -1.0f, 0.0f,   0.0f, 1.0f };
+    m_vertex[7] = { 1.0f,  -1.0f,  1.0f,    0.0f, -1.0f, 0.0f,   1.0f, 1.0f };
 
     // +X SIDE
-    m_vertex[8] = { 1.0f,  1.0f,  1.0f, 1.0f,   0.0f, 0.0f };
-    m_vertex[9] = { 1.0f,  1.0f, -1.0f, 1.0f,   1.0f, 0.0f };
-    m_vertex[10] = { 1.0f, -1.0f,  1.0f, 1.0f,  0.0f, 1.0f };
-    m_vertex[11] = { 1.0f, -1.0f, -1.0f, 1.0f,  1.0f, 1.0f };
+    m_vertex[8] = { 1.0f,  1.0f,  1.0f,    1.0f, 0.0f, 0.0f,   0.0f, 0.0f };
+    m_vertex[9] = { 1.0f,  1.0f, -1.0f,    1.0f, 0.0f, 0.0f,   1.0f, 0.0f };
+    m_vertex[10] = { 1.0f, -1.0f,  1.0f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f };
+    m_vertex[11] = { 1.0f, -1.0f, -1.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f };
 
     // -X SIDE
-    m_vertex[12] = { -1.0f,  1.0f,  1.0f, 1.0f,  1.0f, 0.0f };
-    m_vertex[13] = { -1.0f,  1.0f, -1.0f, 1.0f,  0.0f, 0.0f };
-    m_vertex[14] = { -1.0f, -1.0f,  1.0f, 1.0f,  1.0f, 1.0f };
-    m_vertex[15] = { -1.0f, -1.0f, -1.0f, 1.0f,  0.0f, 1.0f };
+    m_vertex[12] = { -1.0f,  1.0f,  1.0f,   -1.0f, 0.0f, 0.0f,   1.0f, 0.0f };
+    m_vertex[13] = { -1.0f,  1.0f, -1.0f,   -1.0f, 0.0f, 0.0f,   0.0f, 0.0f };
+    m_vertex[14] = { -1.0f, -1.0f,  1.0f,   -1.0f, 0.0f, 0.0f,   1.0f, 1.0f };
+    m_vertex[15] = { -1.0f, -1.0f, -1.0f,   -1.0f, 0.0f, 0.0f,   0.0f, 1.0f };
 
     // +Z SIDE
-    m_vertex[16] = { -1.0f,  1.0f, 1.0f, 1.0f,  0.0f, 0.0f };
-    m_vertex[17] = { 1.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f };
-    m_vertex[18] = { -1.0f, -1.0f, 1.0f, 1.0f,  0.0f, 1.0f };
-    m_vertex[19] = { 1.0f, -1.0f, 1.0f, 1.0f,   1.0f, 1.0f };
+    m_vertex[16] = { -1.0f,  1.0f, 1.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f };
+    m_vertex[17] = { 1.0f,  1.0f, 1.0f,    0.0f, 0.0f, 1.0f,   1.0f, 0.0f };
+    m_vertex[18] = { -1.0f, -1.0f, 1.0f,   0.0f, 0.0f, 1.0f,   0.0f, 1.0f };
+    m_vertex[19] = { 1.0f, -1.0f, 1.0f,    0.0f, 0.0f, 1.0f,   1.0f, 1.0f };
 
     // -Z SIDE
-    m_vertex[20] = { -1.0f,  1.0f, -1.0f, 1.0f,  1.0f, 0.0f };
-    m_vertex[21] = { 1.0f,  1.0f, -1.0f, 1.0f,   0.0f, 0.0f };
-    m_vertex[22] = { -1.0f, -1.0f, -1.0f, 1.0f,  1.0f, 1.0f };
-    m_vertex[23] = { 1.0f, -1.0f, -1.0f, 1.0f,   0.0f, 1.0f };
+    m_vertex[20] = { -1.0f,  1.0f, -1.0f,   0.0f, 0.0f, -1.0f,  1.0f, 0.0f };
+    m_vertex[21] = { 1.0f,  1.0f, -1.0f,    0.0f, 0.0f, -1.0f,  0.0f, 0.0f };
+    m_vertex[22] = { -1.0f, -1.0f, -1.0f,   0.0f, 0.0f, -1.0f,  1.0f, 1.0f };
+    m_vertex[23] = { 1.0f, -1.0f, -1.0f,    0.0f, 0.0f, -1.0f,  0.0f, 1.0f };
 
     // +X
     m_index[0] = 8;
@@ -101,18 +100,20 @@ namespace pugaknSDK {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(UInt32), m_index, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   }
-  void Cube::Draw(const Matrix4D & transform)
+  void Cube::Draw(const Matrix4D & transform, const std::vector<Texture*>& _textures, Shader* _shader)
   {
     glBindBuffer(GL_ARRAY_BUFFER, m_VB);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
-
-    auto shader = ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader;
-    auto texture = ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture;
-
-    shader.Bind(sizeof(Vertex));
-    texture.Bind(shader.m_textures.tex0, 0);
+    _shader->Bind(sizeof(Vertex), transform);
+    size_t i = 0;
+    for (auto &it : _textures)
+    {
+      it->Bind(_shader->m_textures.tex0, i++);
+    }
 
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glUseProgram(0);
   }
   void Cube::Destroy()
   {

@@ -1,5 +1,6 @@
 #pragma once
 #include "pkn_prerequiites.h"
+#include <GL\glew.h>
 #include <string>
 #include "pkn_module.h"
 namespace pugaknSDK {
@@ -20,11 +21,15 @@ namespace pugaknSDK {
     //Deallocate memory
     void Destroy();
 
+    void BindBackBufferFBO();
 
     void Screenshot(std::string path);
 
     //Window handler
     Int32 m_hwnd;
+
+    GLint	 m_FBO;
+    GLenum m_drawBuffers[16];
   private:
     //Private constructor as this is a Module class
     friend class Module<Driver>;

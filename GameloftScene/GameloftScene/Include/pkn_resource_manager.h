@@ -13,7 +13,7 @@ namespace pugaknSDK {
   class ResourceFactory {
   public:
     virtual void Init() = 0;
-    virtual Resource* Load(std::string path) = 0;
+    virtual Resource* Load(std::string path, std::string extraPath = "") = 0;
     virtual bool IsCompatible(std::string ext) = 0;
     virtual std::shared_ptr<Resource> GetDefaultResource() { return m_defaultResource; }
 
@@ -40,7 +40,7 @@ namespace pugaknSDK {
       return std::dynamic_pointer_cast<T>(GetResource(path));
     }
 
-    static SharedResource LoadResource(std::string path);
+    static SharedResource LoadResource(std::string path,std::string extraPath = "");
     static bool IsLoaded(std::string path);
   private:
     std::vector<FactoryPtr> m_foctories;

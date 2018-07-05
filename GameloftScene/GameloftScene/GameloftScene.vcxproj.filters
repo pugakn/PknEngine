@@ -99,6 +99,9 @@
     <ClCompile Include="Source\pkn_sphere.cpp">
       <Filter>Archivos de origen\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Include\pkn_render_target.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\pkn_defines.h">
@@ -160,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="Include\pkn_renderable.h">
       <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_render_target.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_enums.h">
+      <Filter>Archivos de encabezado\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
