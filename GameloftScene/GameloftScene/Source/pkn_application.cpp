@@ -130,6 +130,11 @@ namespace pugaknSDK {
     for (auto &it : m_root.m_children) {
       it->Draw();
     }
+    std::string tString = "FPS: " + std::to_string(Int32(1 / Time::GetDTSeconds()));
+    const unsigned char* t = reinterpret_cast<const unsigned char*>(&tString[0]);
+    glColor3d(1.0, 0.0, 0.0);
+    glRasterPos2f(-0.95, 0.92);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, t);
     Driver::Instance().SwapBuffers();
   }
   void Application::OnMouseClick(Int32 _button, Int32 _state, Int32 _x, Int32 _y)

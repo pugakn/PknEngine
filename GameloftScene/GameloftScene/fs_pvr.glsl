@@ -42,7 +42,6 @@ void main(){
 	vec3 light1 = CalculateLight(lightPos,vec3(1,1,1),Albedo,vec3(1,1,1),eyeDir);
 	
 	gl_FragColor =  vec4(light1 + Ambient  ,1);
-	//gl_FragColor = vec4(1,0,1,1);
 }
 
 
