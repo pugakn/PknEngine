@@ -11,7 +11,7 @@ uniform sampler2D tex0;
 
 void main(){
 	gl_FragColor = texture2D(tex0,vecUVCoords);
-	gl_FragDepth = gl_FragCoord.z;
+	//gl_FragDepth = Pos.z / 10000.0;
 }
 
 

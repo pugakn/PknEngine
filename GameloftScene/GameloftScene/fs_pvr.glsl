@@ -60,21 +60,21 @@ void main(){
 			if (shCoords.x <= 1 && shCoords.y <= 1 && shCoords.x >= 0 && shCoords.y >= 0
 			&&proj.z <=1 && proj.z >= 0 ){
 				vec2 texelSize =  1.0 /1024;       //ShadowTexSize;
-				for(int x = -1; x <= 1; ++x)
+				/*for(int x = -1; x <= 1; ++x)
 				{
 				    for(int y = -1; y <= 1; ++y)
-				    {
-				        float pcfDepth = texture2D(tex1, shCoords + vec2(x,y) * texelSize).r;//
-								if (proj.z > pcfDepth  + 0.002)
+				    {*/
+				        float pcfDepth = texture2D(tex1, shCoords ).r;//+ vec2(x,y) * texelSize
+								if (proj.z > pcfDepth  + 0.004)
 								{
 									//pixel en la sombra
 									shadow += 1.0;
 									//Final.xyz = vec3(1,0,0);
 								}
-				    }
-				}
-				shadow /= 9.0;
-				Final.xyz *(1.0-shadow);
+				 /*   }
+				}*/
+				//shadow /= 9.0;
+				Final.xyz *= (1.0-shadow);
 			}
 			//End Shadow Map ========================
 	

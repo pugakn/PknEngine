@@ -72,7 +72,7 @@ namespace pugaknSDK {
     m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
     m_depthCameraRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
 
-    m_sunLight.Init(Vector3D(0, 100, 200),Vector3D(-0.07,1.35, 0),Vector3D(1,1,1),1000);
+    m_sunLight.Init(Vector3D(0, 50, 100),Vector3D(-0.1,2, 0),Vector3D(1,1,1),1000);
     CameraManager::Instance().m_shadowLight = &m_sunLight;
 
     CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
@@ -99,6 +99,24 @@ namespace pugaknSDK {
       m_root.m_children[1]->SetScale(Vector3D(1000, 1000, 1000));
       m_root.m_children[1]->SetPosition(Vector3D(0, 0, 0));
       m_root.m_children[1]->UpdateTransform();
+
+      m_root.AddChild(&m_cube, shShadow);
+      m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.m_children[2]->SetScale(Vector3D(10, 25, 10));
+      m_root.m_children[2]->SetPosition(Vector3D(40, 20, 0));
+      m_root.m_children[2]->UpdateTransform();
+
+      m_root.AddChild(&m_cube, shShadow);
+      m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.m_children[3]->SetScale(Vector3D(10, 5, 10));
+      m_root.m_children[3]->SetPosition(Vector3D(10, 40, 0));
+      m_root.m_children[3]->UpdateTransform();
+
+      m_root.AddChild(&m_cube, shShadow);
+      m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.m_children[4]->SetScale(Vector3D(20, 20, 20));
+      m_root.m_children[4]->SetPosition(Vector3D(-40, 10, 0));
+      m_root.m_children[4]->UpdateTransform();
     }
 
 
@@ -138,6 +156,8 @@ namespace pugaknSDK {
   }
   void Application::Draw()
   {
+    
+    
     CameraManager::Instance().SetActualCamera(m_sunLight.m_camera);
     m_depthCameraRT.Bind();
     Driver::Instance().Clear(0,0,0,1);
@@ -148,6 +168,7 @@ namespace pugaknSDK {
     Driver::Instance().BindBackBufferFBO();
     CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
 
+    //glCullFace(GL_FRONT);
     Driver::Instance().Clear(0.2,0.2,0.5,1);
     for (auto &it : m_root.m_children) {
       it->SetShader(&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);

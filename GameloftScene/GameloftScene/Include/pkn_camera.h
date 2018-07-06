@@ -6,8 +6,8 @@
 namespace pugaknSDK {
   class Light;
   class Camera {
-    const float DEFAULT_FAR_PLANE = 2000.0f;
-    const float DEFAULT_NEAR_PLANE = 20.f;
+    const float DEFAULT_FAR_PLANE = 1000.0f;
+    const float DEFAULT_NEAR_PLANE = 5.f;
     const float DEFAULT_FOV = 45;
   public:
     void Init(Vector3D _position, Vector3D _rotation);
