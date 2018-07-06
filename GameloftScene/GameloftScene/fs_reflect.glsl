@@ -48,6 +48,7 @@ void main(){
 	vec3 I = normalize(WorldPos - CameraPosition);
     vec3 R = reflect(I, Norm);
 	R.y = -R.y;
+	R.z = -R.z;
 	vec3 Env = textureCube(tex2,R).xyz;
 
 	vec3 lightPos = vec3(0,50,50);

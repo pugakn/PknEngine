@@ -27,7 +27,6 @@ vec3 CalculateLight(vec3 lightPos, vec3 lightColor,vec3 albedo,vec3 specularColo
 	vec3 l = lightPos - WorldPos;
 	float dist = length(l);
 	vec3 lightDir = normalize(l);
-	float lightRadius = 10;
 	
 	vec3 H = normalize(eyeDir+lightDir);
 	
@@ -66,7 +65,6 @@ void main(){
 			fromCamPos = LightVP*WorldPos;
 			vec3 proj = fromCamPos.xyz / fromCamPos.w;
 			proj = 0.5 * (proj + 1.0);
-			//proj = Pos.xyz;
 			vec2 shCoords =  proj.xy;
 			float shadow = 0.0;
 			if (shCoords.x <= 1 && shCoords.y <= 1 && shCoords.x >= 0 && shCoords.y >= 0
@@ -81,7 +79,6 @@ void main(){
 								{
 									//pixel en la sombra
 									shadow += 1.0;
-									//Final.xyz = vec3(1,0,0);
 								}
 				 /*   }
 				}*/
@@ -91,8 +88,8 @@ void main(){
 			//End Shadow Map ========================
 
 	Final.w = 1.0;
-	gl_FragColor =  vec4(Final.xyz + Ambient  ,1);
-	//gl_FragColor = Env.xyzx;
+	gl_FragColor =  vec4(Final.xyz   ,1);
+	//gl_FragColor = Norm.xyzx;
 }
 
 

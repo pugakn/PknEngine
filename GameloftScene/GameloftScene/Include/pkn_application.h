@@ -10,6 +10,7 @@
 #include "pkn_game_object.h"
 #include "pkn_render_target.h"
 #include "pkn_light.h"
+#include "pkn_mesh.h"
 namespace pugaknSDK {
   namespace KEYS {
     enum E {
@@ -48,6 +49,7 @@ namespace pugaknSDK {
     static void IdleFunction();
     Quad m_quad;
     Cube m_cube;
+    Mesh m_model;
   private:
     //Private constructor as this is a Module class
     GameObject m_root;

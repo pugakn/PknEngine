@@ -110,7 +110,8 @@ namespace pugaknSDK {
     {
       m_cubeCameras[i].Update();
     }
-
+    m_model.m_filename = "ahriFire.x";
+    m_model.Init();
     m_quad.Init();
     m_cube.Init();
     {
@@ -152,12 +153,12 @@ namespace pugaknSDK {
       m_root.m_children[3]->SetPosition(Vector3D(10, 40, 0));
       m_root.m_children[3]->UpdateTransform();
 
-      m_root.AddChild(&m_cube, shShadow);
+      m_root.AddChild(&m_model, shShadow);
       m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
       m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[4]->SetScale(Vector3D(20, 20, 20));
-      m_root.m_children[4]->SetPosition(Vector3D(-40, 10, 0));
+      m_root.m_children[4]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[4]->SetPosition(Vector3D(-40, 0, 0));
       m_root.m_children[4]->UpdateTransform();
 
       m_skyBox.SetShader(shShadow);
@@ -243,7 +244,7 @@ namespace pugaknSDK {
     glCullFace(GL_FRONT);
     Int32 i = 0;
     for (auto &it : m_root.m_children) {
-      if (i == 0) {
+      if (i == 0) { //4
         Shader* shReflect = &ResourceManager::GetResourceT<ShaderResource>("vs_reflect.glsl")->m_shader;
         it->SetShader(shReflect);
       }

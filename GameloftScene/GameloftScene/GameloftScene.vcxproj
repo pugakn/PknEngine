@@ -28,6 +28,7 @@
     <ClCompile Include="Source\pkn_game_object.cpp" />
     <ClCompile Include="Source\pkn_light.cpp" />
     <ClCompile Include="Source\pkn_mesh.cpp" />
+    <ClCompile Include="Source\pkn_mesh_parser.cpp" />
     <ClCompile Include="Source\pkn_resource_manager.cpp" />
     <ClCompile Include="Source\pkn_res_shader.cpp" />
     <ClCompile Include="Source\pkn_res_texture.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="Include\pkn_game_object.h" />
     <ClInclude Include="Include\pkn_light.h" />
     <ClInclude Include="Include\pkn_mesh.h" />
+    <ClInclude Include="Include\pkn_mesh_parser.h" />
     <ClInclude Include="Include\pkn_module.h" />
     <ClInclude Include="Include\pkn_prerequiites.h" />
     <ClInclude Include="Include\pkn_renderable.h" />
