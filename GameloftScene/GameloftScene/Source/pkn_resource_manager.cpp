@@ -50,7 +50,7 @@ namespace pugaknSDK {
         if (ptr) {
           ret = ResourceManager::SharedResource(ptr);
           Instance().m_resources[path] = ret;
-          PKN_DEBUG_ONLY(std::cout << "Resource loaded: " << path << std::endl);
+          std::cout << "Resource loaded: " << path << std::endl;
         }
         else {
           ret = it->GetDefaultResource();

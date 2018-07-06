@@ -1,5 +1,6 @@
 #include "pkn_texture.h"
 #include <GL\glew.h>
+#include "pkn_res_texture.h"
 namespace pugaknSDK {
   void Texture::CreateFromMemory(byte* _buffer, Int32 _w, Int32 _h, Int32 _channels)
   {
@@ -32,7 +33,6 @@ namespace pugaknSDK {
 
     
     //Params
-    glBindTexture(GL_TEXTURE_2D, m_id);
 
     unsigned int glFiltering = 0;
     unsigned int glWrap = 0;
@@ -40,28 +40,75 @@ namespace pugaknSDK {
     glFiltering = GL_LINEAR_MIPMAP_LINEAR;
     glWrap = GL_REPEAT;
 
-    //if (params & TEXT_BASIC_PARAMS::MIPMAPS)
-    //  glFiltering = GL_LINEAR_MIPMAP_LINEAR;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glFiltering);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glFiltering);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glWrap);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glWrap);
 
-    //if (params & TEXT_BASIC_PARAMS::CLAMP_TO_EDGE)
-    //  glWrap = GL_CLAMP_TO_EDGE;
+    int Max = 17;
+    glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &Max);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, Max);
 
-    //if (params & TEXT_BASIC_PARAMS::TILED)
-    //  glWrap = GL_REPEAT;
+    glBindTexture(GL_TEXTURE_2D, 0);
+  }
+  void Texture::CreateCompressedFromMemory(byte * _buffer, Int32 _w, Int32 _h, Int32 _channels, UInt64 _fourcc, Int32 _mipCount)
+  {
+    m_width = _w;
+    m_height = _h;
+    m_channels = _channels;
+    unsigned int glTarget = GL_TEXTURE_2D;
+
+    glGenTextures(1, &m_id);
+    glBindTexture(glTarget, m_id);
+
+    UInt32 format;
+    switch (_fourcc)
+    {
+    case TextureResourceFactory::FOURCC_DXT1:
+      format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+      break;
+    case TextureResourceFactory::FOURCC_DXT3:
+      format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+      break;
+    case TextureResourceFactory::FOURCC_DXT5:
+      format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+      break;
+    }
+
+    unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
+    unsigned int offset = 0;
+
+    //Load Mip Maps
+    for (unsigned int level = 0; level < _mipCount && (_w || _h); ++level)
+    {
+      unsigned int size = ((_w + 3) / 4)*((_h + 3) / 4)*blockSize;
+      glCompressedTexImage2D(GL_TEXTURE_2D, level, format, _w, _h,
+        0, size, _buffer + offset);
+      offset += size;
+      _w /= 2;
+      _h /= 2;
+    }
+    //glGenerateMipmap(glTarget);
+
+    //Params
+    unsigned int glFiltering = 0;
+    unsigned int glWrap = 0;
+
+    glFiltering = GL_LINEAR_MIPMAP_LINEAR;
+    glWrap = GL_REPEAT;
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glFiltering);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glFiltering);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glWrap);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glWrap);
 
-    int Max = 1;
+    int Max = 17;
     glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &Max);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, Max);
 
+
+
     glBindTexture(GL_TEXTURE_2D, 0);
-  }
-  void Texture::CreateCompressedFromMemory(byte * _buffer, Int32 _w, Int32 _h, Int32 _channels)
-  {
   }
   void Texture::Bind(Int32 _loc, Int32 _index)
   {

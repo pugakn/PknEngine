@@ -42,7 +42,7 @@ vec3 CalculateLight(vec3 lightPos, vec3 lightColor,vec3 albedo,vec3 specularColo
 
 void main(){
 	Norm = normalize(Norm);
-    vec3 AmbientColor = vec3(0.1,0.1,0.1);
+    vec3 AmbientColor = vec3(0.05,0.05,0.05);
 	vec3 Albedo = texture2D(tex0,vecUVCoords).xyz;
 	
 	vec3 lightPos = vec3(0,50,50);
