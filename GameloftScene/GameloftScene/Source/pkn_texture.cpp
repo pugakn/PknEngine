@@ -106,8 +106,6 @@ namespace pugaknSDK {
     glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &Max);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, Max);
 
-
-
     glBindTexture(GL_TEXTURE_2D, 0);
   }
   void Texture::Bind(Int32 _loc, Int32 _index)

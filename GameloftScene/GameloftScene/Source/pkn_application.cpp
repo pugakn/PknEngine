@@ -259,6 +259,9 @@ namespace pugaknSDK {
     case 'd':
       m_keyStates[KEYS::RIGHT] = true;
       break;
+    case 'e':
+      Driver::Instance().Screenshot("screenshot01.bmp");
+      break;
     }
   }
   void Application::OnKeyboardAsciiReleased(unsigned char _code, Int32 _x, Int32 _y)
