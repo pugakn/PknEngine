@@ -9,6 +9,7 @@
 #include "pkn_camera.h"
 #include "pkn_game_object.h"
 #include "pkn_render_target.h"
+#include "pkn_light.h"
 namespace pugaknSDK {
   namespace KEYS {
     enum E {
@@ -50,7 +51,12 @@ namespace pugaknSDK {
   private:
     //Private constructor as this is a Module class
     GameObject m_root;
+    Light m_sunLight;
+
+
     RenderTarget m_shadowRT;
+    RenderTarget m_depthCameraRT;
+
 
     std::vector<bool> m_keyStates;
     friend class Module<Application>;

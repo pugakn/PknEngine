@@ -54,9 +54,9 @@ namespace pugaknSDK {
       m_drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
     }
   }
-  void Driver::Clear()
+  void Driver::Clear(float r, float g, float b, float a)
   {
-    glClearColor(0.2, 0.2, 0.5, 1.0);
+    glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
   void Driver::SwapBuffers()

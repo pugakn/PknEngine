@@ -2,6 +2,7 @@
 #include <GL\glew.h>
 #include <iostream>
 #include "pkn_camera.h"
+#include "pkn_light.h"
 namespace pugaknSDK {
   void checkcompilederrors(GLuint shader, GLenum type) {
     GLint bShaderCompiled;
@@ -54,18 +55,25 @@ namespace pugaknSDK {
     m_uniforms.WorldView = glGetUniformLocation(m_program, "WorldView");
     m_uniforms.WVP = glGetUniformLocation(m_program, "WVP");
     m_uniforms.CameraPosition = glGetUniformLocation(m_program, "CameraPosition");
+    m_uniforms.LightVP = glGetUniformLocation(m_program, "LightVP");
   }
 
   void Shader::Bind(Int32 stride, const Matrix4D& _world)
   {
     glUseProgram(m_program);
-    Camera& mCam = CameraManager::Instance().GetMainCamera();
+    Camera& mCam = CameraManager::Instance().GetActualCamera();
     Matrix4D wordView = _world * mCam.m_view;
     Matrix4D WVP = _world * mCam.m_vp;
-    glUniformMatrix4fv(m_uniforms.World, 1, GL_FALSE, &_world.m[0][0]);
-    glUniformMatrix4fv(m_uniforms.WorldView, 1, GL_FALSE, &wordView.m[0][0]);
-    glUniformMatrix4fv(m_uniforms.WVP, 1, GL_FALSE, &WVP.m[0][0]);
-    glUniform4fv(m_uniforms.CameraPosition, 1, &mCam.m_position.x);
+    if (m_uniforms.World > -1)
+      glUniformMatrix4fv(m_uniforms.World, 1, GL_FALSE, &_world.m[0][0]);
+    if (m_uniforms.WorldView > -1)
+      glUniformMatrix4fv(m_uniforms.WorldView, 1, GL_FALSE, &wordView.m[0][0]);
+    if (m_uniforms.WVP > -1)
+      glUniformMatrix4fv(m_uniforms.WVP, 1, GL_FALSE, &WVP.m[0][0]);
+    if (m_uniforms.LightVP > -1)
+      glUniformMatrix4fv(m_uniforms.LightVP, 1, GL_FALSE, &CameraManager::Instance().m_shadowLight->m_camera.m_vp.m[0][0]);
+    if (m_uniforms.CameraPosition > -1)
+      glUniform4fv(m_uniforms.CameraPosition, 1, &mCam.m_position.x);
 
     glEnableVertexAttribArray(m_attributes.position);
     glVertexAttribPointer(m_attributes.position, 3, GL_FLOAT, GL_FALSE, stride, PKN_BUFFER_OFFSET(0));

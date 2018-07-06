@@ -7,10 +7,10 @@
 namespace pugaknSDK {
   void Quad::Init()
   {
-    m_vertex[0] = { -1.0f,  1.0f, 0.0f,   0.0f,0.0f,-1.0f,     0.0f, 0.0f }; //Top-Left
-    m_vertex[1] = { -1.0f, -1.0f, 0.0f,   0.0f,0.0f,-1.0f,     0.0f, 1.0f }; //Bootom-Left
-    m_vertex[2] = { 1.0f, -1.0f, 0.0f,    0.0f,0.0f,-1.0f,     1.0f, 1.0f };  //Bottom-Right
-    m_vertex[3] = { 1.0f,  1.0f, 0.0f,    0.0f,0.0f,-1.0f,     1.0f, 0.0f };  //Top-Right
+    m_vertex[0] = { -1.0f,  1.0f, 0.0f,   0.0f,0.0f,1.0f,     0.0f, 0.0f }; //Top-Left
+    m_vertex[1] = { -1.0f, -1.0f, 0.0f,   0.0f,0.0f,1.0f,     0.0f, 1.0f }; //Bootom-Left
+    m_vertex[2] = { 1.0f, -1.0f, 0.0f,    0.0f,0.0f,1.0f,     1.0f, 1.0f };  //Bottom-Right
+    m_vertex[3] = { 1.0f,  1.0f, 0.0f,    0.0f,0.0f,1.0f,     1.0f, 0.0f };  //Top-Right
 
     m_index[0] = 2;
     m_index[1] = 1;
@@ -37,15 +37,17 @@ namespace pugaknSDK {
     _shader->Bind(sizeof(Vertex), transform);
 
     size_t i = 0;
+    Int32* ptr = &_shader->m_textures.tex0;
     for (auto &it : _textures)
     {
-      it->Bind(_shader->m_textures.tex0, i++);
+      it->Bind(*ptr, i++);
+      ptr++;
     }
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-   // for (size_t i = 0; i < _textures.size(); i++)
+    for (size_t i = 0; i < _textures.size(); i++)
     {
-      //glActiveTexture(GL_TEXTURE0 + i);
+      glActiveTexture(GL_TEXTURE0 + i);
       glBindTexture(GL_TEXTURE_2D, 0);
     }
     glUseProgram(0);

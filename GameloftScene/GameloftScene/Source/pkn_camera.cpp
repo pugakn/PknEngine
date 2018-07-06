@@ -1,15 +1,15 @@
 #include "pkn_camera.h"
 #include <math.h>
 namespace pugaknSDK {
-  void Camera::Init()
+  void Camera::Init(Vector3D _position, Vector3D _rotation)
   {
     m_xDir = Vector3D(1,0,0);
     m_yDir = Vector3D(0, 1, 0);
     m_zDir = Vector3D(0, 0, 1);
-    m_rotX = 0;
-    m_rotY = 0;
+    m_rotX = _rotation.x;
+    m_rotY = _rotation.y;
     m_rotationVelocity = 2.0f;
-    m_position = Vector3D(0, 0, 10);
+    m_position = _position;
     m_view = Identity();
     m_projection = PerspectiveFOVRH(ToRadian(DEFAULT_FOV), 1280.0f / 720.0f, DEFAULT_NEAR_PLANE, DEFAULT_FAR_PLANE);
     m_vp = m_view*m_projection;
@@ -27,12 +27,10 @@ namespace pugaknSDK {
 
   void Camera::RotateX(float _rotation)
   {
-    //rotX += rotation * m_rotationVel;
     m_rotX = _rotation * 3.1416f;
   }
   void Camera::RotateY(float _rotation)
   {
-    //rotY += rotation * m_rotationVel;
     m_rotY = _rotation * 3.1416f + 1.5708;
   }
 
@@ -60,10 +58,19 @@ namespace pugaknSDK {
   }
   void CameraManager::Init()
   {
-    m_main.Init();
+    m_main.Init(Vector3D(0,25,100),Vector3D(0,0,0));
+    m_actual = &m_main;
   }
   Camera & CameraManager::GetMainCamera()
   {
     return m_main;
+  }
+  Camera & CameraManager::GetActualCamera()
+  {
+    return *m_actual;
+  }
+  void CameraManager::SetActualCamera(const Camera& _actual)
+  {
+    m_actual = const_cast<Camera*>(&_actual);
   }
 }

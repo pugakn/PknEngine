@@ -4,12 +4,13 @@
 #include  <MATH/Vector3D.h>
 #include "pkn_module.h"
 namespace pugaknSDK {
+  class Light;
   class Camera {
-    const float DEFAULT_FAR_PLANE = 5000.0f;
-    const float DEFAULT_NEAR_PLANE = 1.0f;
+    const float DEFAULT_FAR_PLANE = 2000.0f;
+    const float DEFAULT_NEAR_PLANE = 20.f;
     const float DEFAULT_FOV = 45;
   public:
-    void Init();
+    void Init(Vector3D _position, Vector3D _rotation);
     void Update();
     void Resize(Int32 _w, Int32 _h);
     void Camera::TraslateFront(float _velocity);
@@ -34,8 +35,12 @@ namespace pugaknSDK {
   public:
     void Init();
     Camera& GetMainCamera();
+    Camera& GetActualCamera();
+    void SetActualCamera(const Camera& _actual);
+    Light* m_shadowLight;
   private:
     Camera m_main;
+    Camera* m_actual;
   };
 
 }

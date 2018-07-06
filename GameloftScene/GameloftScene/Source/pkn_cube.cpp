@@ -106,13 +106,19 @@ namespace pugaknSDK {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
     _shader->Bind(sizeof(Vertex), transform);
     size_t i = 0;
+    Int32* ptr = &_shader->m_textures.tex0;
     for (auto &it : _textures)
     {
-      it->Bind(_shader->m_textures.tex0, i++);
+      it->Bind(*ptr, i++);
+      ptr++;
     }
 
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    for (size_t i = 0; i < _textures.size(); i++)
+    {
+      glActiveTexture(GL_TEXTURE0 + i);
+      glBindTexture(GL_TEXTURE_2D, 0);
+    }
     glUseProgram(0);
   }
   void Cube::Destroy()

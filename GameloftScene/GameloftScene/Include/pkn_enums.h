@@ -2,7 +2,8 @@
 namespace pugaknSDK {
   namespace COLOR_FORMAT {
     enum E {
-      RGBA8
+      RGBA8,
+      RGBA32F
     };
   }
   namespace DEPTH_FORMAT {

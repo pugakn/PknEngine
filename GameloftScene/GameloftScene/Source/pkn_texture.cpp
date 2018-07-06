@@ -38,7 +38,7 @@ namespace pugaknSDK {
     unsigned int glWrap = 0;
 
     glFiltering = GL_LINEAR_MIPMAP_LINEAR;
-    glWrap = GL_CLAMP_TO_EDGE;
+    glWrap = GL_REPEAT;
 
     //if (params & TEXT_BASIC_PARAMS::MIPMAPS)
     //  glFiltering = GL_LINEAR_MIPMAP_LINEAR;
@@ -65,6 +65,7 @@ namespace pugaknSDK {
   }
   void Texture::Bind(Int32 _loc, Int32 _index)
   {
+    if (_loc < 0) return;
     glActiveTexture(GL_TEXTURE0 + _index);
     glBindTexture(GL_TEXTURE_2D, m_id);
     glUniform1i(_loc, _index);

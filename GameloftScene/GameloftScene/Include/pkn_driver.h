@@ -15,7 +15,7 @@ namespace pugaknSDK {
     //Initializate GLUT, GLEW and OpenGL
     void Init(Int32 argc, char** argv, Callback displayFunction);
     //Clear back buffer color
-    void Clear(); //TODO: Color param
+    void Clear(float r, float g, float b, float a); //TODO: Color param
     //Swap back-front buffers
     void SwapBuffers();
     //Deallocate memory

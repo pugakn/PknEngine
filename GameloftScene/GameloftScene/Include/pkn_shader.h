@@ -24,6 +24,7 @@ namespace pugaknSDK {
       Int32 WorldView;
       Int32 WVP;
       Int32 CameraPosition;
+      Int32 LightVP;
     } m_uniforms;
   };
 }

@@ -60,18 +60,26 @@ namespace pugaknSDK {
     Time::Init();
     Driver::StartUp();
     Driver::Instance().Init(argc,argv,&Application::DisplayFunction);
+    auto w = glutGet(GLUT_WINDOW_WIDTH);
+    auto h = glutGet(GLUT_WINDOW_HEIGHT);
     ResourceManager::StartUp();
     ResourceManager::Init();
     CameraManager::StartUp();
     CameraManager::Instance().Init();
-    auto w = glutGet(GLUT_WINDOW_WIDTH);
-    auto h = glutGet(GLUT_WINDOW_HEIGHT);
-    CameraManager::Instance().GetMainCamera().Resize(w, h);
-
     ResourceManager::LoadResource("vs_quad.glsl", "fs_quad.glsl");
     ResourceManager::LoadResource("vs_pvr.glsl", "fs_pvr.glsl");
     ResourceManager::LoadResource("test.tga");
-    m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, 1024, 1024);
+    m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
+    m_depthCameraRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
+
+    m_sunLight.Init(Vector3D(0, 100, 200),Vector3D(-0.07,1.35, 0),Vector3D(1,1,1),1000);
+    CameraManager::Instance().m_shadowLight = &m_sunLight;
+
+    CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
+    CameraManager::Instance().GetMainCamera().Resize(w, h);
+    CameraManager::Instance().SetActualCamera(m_sunLight.m_camera);
+    CameraManager::Instance().GetActualCamera().Resize(w, h);
+    CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
     Driver::Instance().BindBackBufferFBO();
 
     m_quad.Init();
@@ -82,10 +90,14 @@ namespace pugaknSDK {
 
       m_root.AddChild(&m_cube,shShadow);
       m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.m_children[0]->SetScale(Vector3D(10, 10, 10));
+      m_root.m_children[0]->SetPosition(Vector3D(0, 10, 0));
+      m_root.m_children[0]->UpdateTransform();
       m_root.AddChild(&m_quad,shBase);
+      m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_root.m_children[1]->SetRotation(Vector3D(90, 0, 0));
-      m_root.m_children[1]->SetScale(Vector3D(100, 100, 100));
-      m_root.m_children[1]->SetPosition(Vector3D(0, -5, 0));
+      m_root.m_children[1]->SetScale(Vector3D(1000, 1000, 1000));
+      m_root.m_children[1]->SetPosition(Vector3D(0, 0, 0));
       m_root.m_children[1]->UpdateTransform();
     }
 
@@ -105,8 +117,8 @@ namespace pugaknSDK {
   }
   void Application::Update()
   {
-    Camera& mCam = CameraManager::Instance().GetMainCamera();
-    const float vel = 10 * Time::GetDTSeconds();
+    Camera& mCam = CameraManager::Instance().GetActualCamera();
+    const float vel = 50 * Time::GetDTSeconds();
     if (m_keyStates[KEYS::UP]) {
       mCam.TraslateFront(vel * -1);
       mCam.Update();
@@ -126,8 +138,22 @@ namespace pugaknSDK {
   }
   void Application::Draw()
   {
-    Driver::Instance().Clear();
+    CameraManager::Instance().SetActualCamera(m_sunLight.m_camera);
+    m_depthCameraRT.Bind();
+    Driver::Instance().Clear(0,0,0,1);
     for (auto &it : m_root.m_children) {
+      it->SetShader(&ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader);
+      it->Draw();
+    }
+    Driver::Instance().BindBackBufferFBO();
+    CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
+
+    Driver::Instance().Clear(0.2,0.2,0.5,1);
+    for (auto &it : m_root.m_children) {
+      it->SetShader(&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);
+      it->m_textures.clear();
+      it->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      it->m_textures.push_back(m_depthCameraRT.m_depthTexture.get());
       it->Draw();
     }
     std::string tString = "FPS: " + std::to_string(Int32(1 / Time::GetDTSeconds()));
@@ -142,7 +168,7 @@ namespace pugaknSDK {
   }
   void Application::OnMouseMove(Int32 _x, Int32 _y)
   {
-    Camera& mCam = CameraManager::Instance().GetMainCamera();
+    Camera& mCam = CameraManager::Instance().GetActualCamera();
     auto w = glutGet(GLUT_WINDOW_WIDTH);
     auto h = glutGet(GLUT_WINDOW_HEIGHT);
     Vector3D mRot(_x/(float)w,_y/(float)h,0);
@@ -224,7 +250,11 @@ namespace pugaknSDK {
   }
   void Application::OnResize(Int32 _w, Int32 _h)
   {
-    CameraManager::Instance().GetMainCamera().Resize(_w,_h);
+    CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
+    CameraManager::Instance().GetMainCamera().Resize(_w, _h);
+    CameraManager::Instance().SetActualCamera(m_sunLight.m_camera);
+    CameraManager::Instance().GetActualCamera().Resize(_w, _h);
+    CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
   }
   void Application::Destroy()
   {

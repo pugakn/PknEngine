@@ -7,14 +7,20 @@ void pugaknSDK::RenderTarget::Create(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT:
 {
   m_width = _w;
   m_height = _h;
-  GLint depth_fmt = GL_DEPTH_COMPONENT;
+  GLint depth_fmt = GL_DEPTH_COMPONENT; //GL_DEPTH24_STENCIL8
   GLint color_fmt;
+  GLint cinternal;
+  GLint bysize;
   if (_colorFormat == COLOR_FORMAT::RGBA8) {
     color_fmt = GL_RGB;
+    cinternal = GL_RGBA;
+    bysize = GL_UNSIGNED_BYTE;
   }
-  //if (colorf == COLOR_F::RGBA32) {
-  //  color_fmt = GL_RGB32F;
-  //}
+  if (_colorFormat == COLOR_FORMAT::RGBA32F) {
+    color_fmt = GL_RGB32F;
+    cinternal = GL_RGBA;
+    bysize = GL_FLOAT;
+  }
   GLuint fbo;
   GLuint dtex;
 
@@ -23,12 +29,13 @@ void pugaknSDK::RenderTarget::Create(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT:
 
   glGenTextures(1, &dtex);
   glBindTexture(GL_TEXTURE_2D, dtex);
-  glTexImage2D(GL_TEXTURE_2D, 0, depth_fmt, _w, _h, 0, depth_fmt, GL_UNSIGNED_INT, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _w, _h, 0, depth_fmt, GL_FLOAT, NULL);
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_NONE);
 
   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, dtex, 0);
 
@@ -42,7 +49,7 @@ void pugaknSDK::RenderTarget::Create(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT:
     GLuint ctex;
     glGenTextures(1, &ctex);
     glBindTexture(GL_TEXTURE_2D, ctex);
-    glTexImage2D(GL_TEXTURE_2D, 0, color_fmt, _w, _h, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, color_fmt, _w, _h, 0, cinternal, bysize, 0);
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -54,8 +61,8 @@ void pugaknSDK::RenderTarget::Create(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT:
     m_textures[i]->m_id = ctex;
     m_textures[i]->m_width = _w;
     m_textures[i]->m_height = _h;
-    m_idList.push_back(fbo);
   }
+  m_idList.push_back(fbo);
 }
 
 void pugaknSDK::RenderTarget::Bind()
