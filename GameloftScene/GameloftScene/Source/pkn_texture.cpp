@@ -1,5 +1,4 @@
 #include "pkn_texture.h"
-#include <GL\glew.h>
 #include "pkn_res_texture.h"
 namespace pugaknSDK {
   void Texture::CreateFromMemory(byte* _buffer, Int32 _w, Int32 _h, Int32 _channels)
@@ -112,7 +111,7 @@ namespace pugaknSDK {
   {
     if (_loc < 0) return;
     glActiveTexture(GL_TEXTURE0 + _index);
-    glBindTexture(GL_TEXTURE_2D, m_id);
+    glBindTexture(m_type, m_id);
     glUniform1i(_loc, _index);
   }
   void Texture::Destroy()

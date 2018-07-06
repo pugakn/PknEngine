@@ -7,7 +7,9 @@ namespace pugaknSDK {
   class RenderTarget {
   public:
     void Create(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT::E _depthFormat, Int32 _numRT, Int32 _w = 0, Int32 _h = 0);
+    void CreateCubemap(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT::E _depthFormat, Int32 _w = 0, Int32 _h = 0);
     void Bind();
+    void BindCubeMap(Int32 _i);
 
     Int32 m_width;
     Int32 m_height;

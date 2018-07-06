@@ -1,5 +1,6 @@
 #pragma once
 #include "pkn_prerequiites.h"
+#include <GL\glew.h>
 namespace pugaknSDK {
   class Texture {
   public:
@@ -12,6 +13,8 @@ namespace pugaknSDK {
     Int32 m_height;
     Int32 m_channels;
     
+    Int32 m_type = GL_TEXTURE_2D;
+
     UInt32 m_id;
   };
 }

@@ -65,11 +65,86 @@ void pugaknSDK::RenderTarget::Create(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT:
   m_idList.push_back(fbo);
 }
 
+void pugaknSDK::RenderTarget::CreateCubemap(COLOR_FORMAT::E _colorFormat, DEPTH_FORMAT::E _depthFormat, Int32 _w, Int32 _h)
+{
+  m_width = _w;
+  m_height = _h;
+  GLint depth_fmt = GL_DEPTH_COMPONENT; //GL_DEPTH24_STENCIL8
+  GLint color_fmt;
+  GLint cinternal;
+  GLint bysize;
+  if (_colorFormat == COLOR_FORMAT::RGBA8) {
+    color_fmt = GL_RGBA;
+    cinternal = GL_RGBA;
+    bysize = GL_UNSIGNED_BYTE;
+  }
+  if (_colorFormat == COLOR_FORMAT::RGBA32F) {
+    color_fmt = GL_RGB32F;
+    cinternal = GL_RGBA;
+    bysize = GL_FLOAT;
+  }
+  GLuint fbo;
+  GLuint dtex;
+
+  glGenFramebuffers(1, &fbo);
+  glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+  glGenTextures(1, &dtex);
+  glBindTexture(GL_TEXTURE_2D, dtex);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _w, _h, 0, depth_fmt, GL_FLOAT, NULL);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_NONE);
+
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, dtex, 0);
+
+  m_depthTexture = std::make_shared<Texture>();
+  m_depthTexture->m_id = dtex;
+  m_depthTexture->m_width = _w;
+  m_depthTexture->m_height = _h;
+
+  GLuint ctex;
+  glGenTextures(1, &ctex);
+  glBindTexture(GL_TEXTURE_CUBE_MAP, ctex);
+
+  m_textures.resize(1);
+  m_textures[0] = std::make_shared<Texture>();
+  m_textures[0]->m_id = ctex;
+  m_textures[0]->m_width = _w;
+  m_textures[0]->m_height = _h;
+  m_textures[0]->m_type = GL_TEXTURE_CUBE_MAP;
+  for (int i = 0; i < 6; i++) {
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, color_fmt, _w, _h, 0, cinternal, bysize, 0);
+  }
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, ctex, 0);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+  m_idList.push_back(fbo);
+}
+
 void pugaknSDK::RenderTarget::Bind()
 {
   glBindFramebuffer(GL_FRAMEBUFFER, m_idList[0]);
   glDrawBuffers(m_idList.size(), Driver::Instance().m_drawBuffers);
 
+  glViewport(0, 0, m_width, m_height);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void pugaknSDK::RenderTarget::BindCubeMap(Int32 _i)
+{
+  //glActiveTexture(GL_TEXTURE0);
+  glBindFramebuffer(GL_FRAMEBUFFER, m_idList[0]);
+  glDrawBuffers(m_idList.size(), Driver::Instance().m_drawBuffers);
+  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + _i, m_textures[0]->m_id, 0);
   glViewport(0, 0, m_width, m_height);
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

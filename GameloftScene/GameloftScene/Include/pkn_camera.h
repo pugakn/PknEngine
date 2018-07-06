@@ -11,7 +11,7 @@ namespace pugaknSDK {
     const float DEFAULT_NEAR_PLANE = 5.f;
     const float DEFAULT_FOV = 45;
   public:
-    void Init(Vector3D _position, Vector3D _rotation);
+    void Init(Vector3D _position, Vector3D _rotation, bool _usingEulerAngles = true, float _fov = 45);
     void Update();
     void Resize(Int32 _w, Int32 _h);
     void Camera::TraslateFront(float _velocity);
@@ -19,10 +19,14 @@ namespace pugaknSDK {
     void Camera::RotateX(float _rotation);
     void Camera::RotateY(float _rotation);
     void SetPosition(Vector3D _position);
+    void SetTarget(Vector3D _target);
 
     float m_rotX;
     float m_rotY;
     float m_rotationVelocity;
+    float m_fov;
+
+    bool m_usingEulerAngles;
     Vector3D m_position;
     Vector3D m_xDir;
     Vector3D m_yDir;

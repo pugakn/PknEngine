@@ -91,7 +91,7 @@ void main(){
 			//End Shadow Map ========================
 
 	Final.w = 1.0;
-	gl_FragColor =  vec4(Final.xyz + Ambient  ,1);
+	gl_FragColor =  vec4(Env.xyz,1);
 	//gl_FragColor = Env.xyzx;
 }
 

@@ -47,6 +47,7 @@ void main(){
 	vec3 Albedo = texture2D(tex0,vecUVCoords).xyz;
 	vec3 I = normalize(WorldPos - CameraPosition);
     vec3 R = reflect(I, Norm);
+	R.y = -R.y;
 	vec3 Env = textureCube(tex2,R).xyz;
 
 	vec3 lightPos = vec3(0,50,50);
@@ -91,7 +92,7 @@ void main(){
 			//End Shadow Map ========================
 
 	Final.w = 1.0;
-	gl_FragColor =  vec4(Final.xyz + Ambient  ,1);
+	gl_FragColor =  vec4(Env.xyz,1);
 	//gl_FragColor = Env.xyzx;
 }
 

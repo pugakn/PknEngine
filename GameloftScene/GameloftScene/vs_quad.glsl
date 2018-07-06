@@ -12,6 +12,7 @@ uniform mat4 WorldView;
 
 void main(){
 	vecUVCoords = Coords;	
+	//vecUVCoords.y *= -1;
 	WorldPos = World * vec4(Position,1);
 	Pos = WVP * vec4(Position,1);
 	gl_Position = Pos;
