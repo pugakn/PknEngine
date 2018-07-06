@@ -34,6 +34,11 @@ namespace pugaknSDK {
     m_rotY = _rotation * 3.1416f + 1.5708;
   }
 
+  void Camera::SetPosition(Vector3D _position)
+  {
+    m_position = _position;
+  }
+
   void Camera::Update()
   {
     float cosPitch = cos(m_rotX);

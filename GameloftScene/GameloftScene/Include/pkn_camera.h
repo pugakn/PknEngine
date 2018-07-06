@@ -3,6 +3,7 @@
 #include <MATH/Matrix4D.h>
 #include  <MATH/Vector3D.h>
 #include "pkn_module.h"
+#include <vector>
 namespace pugaknSDK {
   class Light;
   class Camera {
@@ -17,6 +18,7 @@ namespace pugaknSDK {
     void Camera::TraslateSide(float _velocity);
     void Camera::RotateX(float _rotation);
     void Camera::RotateY(float _rotation);
+    void SetPosition(Vector3D _position);
 
     float m_rotX;
     float m_rotY;
@@ -37,7 +39,7 @@ namespace pugaknSDK {
     Camera& GetMainCamera();
     Camera& GetActualCamera();
     void SetActualCamera(const Camera& _actual);
-    Light* m_shadowLight;
+    std::vector<Light*> m_lights;
   private:
     Camera m_main;
     Camera* m_actual;

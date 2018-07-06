@@ -8,6 +8,8 @@ namespace pugaknSDK {
     _rotation.x *= 3.1416f;
     _rotation.y *= 3.1416f;
     m_camera.Init(_position, _rotation);
+    m_color = _color;
+    m_radius = _radius;
   }
   //void Light::SetPosition(Vector3D _position)
   //{

@@ -17,6 +17,6 @@ void main(){
 	vecUVCoords = Coords;	
 	WorldPos = World*vec4(Position,1);
 	Pos = WVP * vec4(Position,1);
-	Norm = World * vec4(Normal,1);
+	Norm = vec4(((mat3)World) * Normal,1);
 	gl_Position = Pos;
 }

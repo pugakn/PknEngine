@@ -3,6 +3,10 @@ uniform mat4 World;
 uniform mat4 WorldView;
 uniform mat4 LightVP;
 uniform vec4 CameraPosition;
+uniform vec4 LightPositions[2];
+uniform vec4 LightColors[2];
+uniform vec4 LightRadius[2];
+
 
 varying vec2 vecUVCoords;
 varying vec4 Pos;
@@ -16,10 +20,12 @@ vec3 CalculateDiffuse(float NdL, vec3 albedoColor){
 	return NdL * albedoColor;
 }
 vec3 CalculateSpecular(float NdH, vec3 specularColor ) {
-  return pow(NdH,32) * specularColor;
+  return pow(NdH,16) * specularColor;
 }
-vec3 CalculateLight(vec3 lightPos, vec3 lightColor,vec3 albedo,vec3 specularColor, vec3 eyeDir){
-	vec3 lightDir = normalize(lightPos - WorldPos);
+vec3 CalculateLight(vec3 lightPos, vec3 lightColor,vec3 albedo,vec3 specularColor, vec3 eyeDir, float radius){
+	vec3 l = lightPos - WorldPos;
+	float dist = length(l);
+	vec3 lightDir = normalize(l);
 	float lightRadius = 10;
 	
 	vec3 H = normalize(eyeDir+lightDir);
@@ -29,25 +35,27 @@ vec3 CalculateLight(vec3 lightPos, vec3 lightColor,vec3 albedo,vec3 specularColo
 	
 	vec3 diffuse = CalculateDiffuse(NdL,albedo);
 	vec3 specular = CalculateSpecular(NdH,specularColor);
-	return NdL * lightColor * (diffuse + specular );
+	float att = clamp(1.0 - dist*dist/(radius*radius), 0.0, 1.0); 
+	att *= att;
+	return NdL * lightColor * (diffuse + specular ) * att;
 }
 
 void main(){
 	Norm = normalize(Norm);
     vec3 AmbientColor = vec3(0.1,0.1,0.1);
+	vec3 Albedo = texture2D(tex0,vecUVCoords).xyz;
 	
 	vec3 lightPos = vec3(0,50,50);
     vec3 eyeDir = normalize(CameraPosition - WorldPos).xyz;
-	vec3 Albedo = texture2D(tex0,vecUVCoords).xyz;
 	vec3 SpecularColor = vec3(1,1,1);
-	
-	vec4 LightDepth = texture2D(tex1,vecUVCoords).xyzw;
-	
+
+	vec4 Final = vec4(0,0,0,0);
 	vec3 Ambient = AmbientColor * Albedo;
-	vec3 light1 = CalculateLight(lightPos,vec3(1,1,1),Albedo,vec3(1,1,1),eyeDir);
+	for (int i = 0; i < 2; ++i){
+	   Final += CalculateLight(LightPositions[i],LightColors[i], Albedo, vec3(1,1,1), eyeDir, LightRadius[i]).xyzx;
+	}
 	
-	
-	vec4 Final = vec4(light1,1);
+
 	//Shadow Map=============================
 			vec4 fromCamPos;
 			WorldPos.w = 1.0;
@@ -77,7 +85,8 @@ void main(){
 				Final.xyz *= (1.0-shadow);
 			}
 			//End Shadow Map ========================
-	
+
+	Final.w = 1.0;
 	gl_FragColor =  vec4(Final.xyz + Ambient ,1);
 	//gl_FragColor = CameraPosition.xyzx;
 }

@@ -72,8 +72,10 @@ namespace pugaknSDK {
     m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
     m_depthCameraRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
 
-    m_sunLight.Init(Vector3D(0, 50, 100),Vector3D(-0.1,2, 0),Vector3D(1,1,1),1000);
-    CameraManager::Instance().m_shadowLight = &m_sunLight;
+    m_sunLight.Init(Vector3D(0, 50, 100),Vector3D(-0.1,2, 0),Vector3D(0.5,0.5,0.5),10000);
+    m_cameraLight.Init(Vector3D(0, 50, 50), Vector3D(-0.1, 2, 0), Vector3D(0.7, 0.5, 0.5), 200);
+    CameraManager::Instance().m_lights.push_back(&m_sunLight);
+    CameraManager::Instance().m_lights.push_back(&m_cameraLight);
 
     CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
     CameraManager::Instance().GetMainCamera().Resize(w, h);
@@ -153,6 +155,8 @@ namespace pugaknSDK {
       mCam.TraslateSide(vel * -1);
       mCam.Update();
     }
+    m_cameraLight.m_camera.SetPosition(mCam.m_position);
+    m_cameraLight.m_camera.Update();
   }
   void Application::Draw()
   {

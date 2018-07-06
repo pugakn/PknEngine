@@ -25,6 +25,9 @@ namespace pugaknSDK {
       Int32 WVP;
       Int32 CameraPosition;
       Int32 LightVP;
+      Int32 LightPositions;
+      Int32 LightColors;
+      Int32 LightRadius;
     } m_uniforms;
   };
 }

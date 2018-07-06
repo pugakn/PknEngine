@@ -52,7 +52,7 @@ namespace pugaknSDK {
     //Private constructor as this is a Module class
     GameObject m_root;
     Light m_sunLight;
-
+    Light m_cameraLight;
 
     RenderTarget m_shadowRT;
     RenderTarget m_depthCameraRT;
