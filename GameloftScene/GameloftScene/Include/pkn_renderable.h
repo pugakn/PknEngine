@@ -16,9 +16,11 @@ namespace pugaknSDK {
   class IRenderableObject {
   public:
     virtual void Init() = 0;
-    virtual void Draw(const Matrix4D& transform, const std::vector<Texture*>& _textures, Shader* _shader) = 0;
+    virtual void Draw(const Matrix4D& transform) = 0;
     virtual void Destroy() = 0;
 
+    void SetShader(const Shader& _shader);
+    Shader* m_shader;
     GLuint m_VB;
     GLuint m_IB;
   };

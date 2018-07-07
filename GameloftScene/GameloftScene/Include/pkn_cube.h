@@ -10,8 +10,10 @@ namespace pugaknSDK {
   class Cube : public IRenderableObject {
   public:
     void Init() override;
-    void Draw(const Matrix4D& transform, const std::vector<Texture*>& _textures, Shader* _shader) override;
+    void Draw(const Matrix4D& transform) override;
     void Destroy() override;
+
+    std::vector<Texture*> m_textures;
   private:
     UInt32 m_index[36];
     Vertex m_vertex[24];

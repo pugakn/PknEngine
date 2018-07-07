@@ -6,6 +6,7 @@
 #include "pkn_time.h"
 #include "pkn_res_texture.h"
 #include "pkn_res_shader.h"
+#include "pkn_res_model.h"
 namespace pugaknSDK {
   void Application::DisplayFunction()
   {
@@ -71,6 +72,11 @@ namespace pugaknSDK {
     ResourceManager::LoadResource("vs_reflect.glsl", "fs_reflect.glsl");
     ResourceManager::LoadResource("test.tga");
     ResourceManager::LoadResource("diffuse_TGA_DXT5_1.dds");
+    ResourceManager::LoadResource("ahriFire.x");
+    ResourceManager::LoadResource("ahri.x");
+    ResourceManager::LoadResource("Darius.x");
+    ResourceManager::LoadResource("Jinx.x");
+
     m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
     m_depthCameraRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
     m_cubeRT.CreateCubemap(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1024, 1024);
@@ -104,67 +110,92 @@ namespace pugaknSDK {
     m_cubeCameras[1].SetTarget(m_cubeCameras[1].m_position + Vector3D(-10, 0, 0));
     m_cubeCameras[2].SetTarget(m_cubeCameras[2].m_position + Vector3D(0, -10, 0));
     m_cubeCameras[3].SetTarget(m_cubeCameras[3].m_position + Vector3D(0, 10, 0));
-    m_cubeCameras[4].SetTarget(m_cubeCameras[4].m_position + Vector3D(0, 0, 10));
-    m_cubeCameras[5].SetTarget(m_cubeCameras[5].m_position + Vector3D(0, 0, -10));
+    m_cubeCameras[4].SetTarget(m_cubeCameras[4].m_position + Vector3D(0, 0, -10));
+    m_cubeCameras[5].SetTarget(m_cubeCameras[5].m_position + Vector3D(0, 0, 10));
     for (size_t i = 0; i < 6; i++)
     {
       m_cubeCameras[i].Update();
     }
-    m_model.m_filename = "ahriFire.x";
-    m_model.Init();
     m_quad.Init();
     m_cube.Init();
+
+    Mesh& mesh = ResourceManager::GetResourceT<ModelResource>("ahriFire.x")->m_mesh;
+    Mesh& ahri = ResourceManager::GetResourceT<ModelResource>("ahri.x")->m_mesh;
+    Mesh& darius = ResourceManager::GetResourceT<ModelResource>("Darius.x")->m_mesh;
+    Mesh& jinx = ResourceManager::GetResourceT<ModelResource>("Jinx.x")->m_mesh;
+
+    mesh.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    mesh.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    ahri.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    ahri.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    darius.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    darius.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    jinx.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    jinx.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
     {
       Shader* shBase = &ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader;
       Shader* shShadow = &ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader;
       Shader* shReflect = &ResourceManager::GetResourceT<ShaderResource>("vs_reflect.glsl")->m_shader;
 
+      mesh.m_shader = shShadow;
+      m_quad.m_shader = shShadow;
+      m_cube.m_shader = shShadow;
+      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
+      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
 
+      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
 
-      m_root.AddChild(&m_cube,shShadow);
-      m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.AddChild(&m_cube);
+      //m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_root.m_children[0]->SetScale(Vector3D(10, 10, 10));
       m_root.m_children[0]->SetPosition(Vector3D(0, 10, 0));
       m_root.m_children[0]->UpdateTransform();
-      m_root.AddChild(&m_quad,shBase);
-      m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.AddChild(&m_quad);
+      //m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_root.m_children[1]->SetRotation(Vector3D(90, 0, 0));
       m_root.m_children[1]->SetScale(Vector3D(250, 250, 250));
       m_root.m_children[1]->SetPosition(Vector3D(0, 0, 0));
       m_root.m_children[1]->UpdateTransform();
 
-      m_root.AddChild(&m_cube, shShadow);
-      m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[2]->SetScale(Vector3D(10, 25, 10));
+      m_root.AddChild(&darius);
+      //m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.m_children[2]->SetScale(Vector3D(1, 1, 1));
       m_root.m_children[2]->SetPosition(Vector3D(40, 20, 0));
       m_root.m_children[2]->UpdateTransform();
 
-      m_root.AddChild(&m_cube, shShadow);
-      m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[3]->SetScale(Vector3D(10, 5, 10));
+      m_root.AddChild(&jinx);
+      //m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.m_children[3]->SetScale(Vector3D(1, 1, 1));
       m_root.m_children[3]->SetPosition(Vector3D(10, 40, 0));
       m_root.m_children[3]->UpdateTransform();
 
-      m_root.AddChild(&m_model, shShadow);
-      m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
-      m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[4]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_root.AddChild(&mesh);
       m_root.m_children[4]->SetScale(Vector3D(1, 1, 1));
       m_root.m_children[4]->SetPosition(Vector3D(-40, 0, 0));
       m_root.m_children[4]->UpdateTransform();
 
-      m_skyBox.SetShader(shShadow);
+      m_root.AddChild(&ahri);
+      m_root.m_children[5]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[5]->SetPosition(Vector3D(-60, 0, 0));
+      m_root.m_children[5]->UpdateTransform();
+
       m_skyBox.SetRenderComponent(&m_cube);
-      m_skyBox.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
-      m_skyBox.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      //m_skyBox.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
+      //m_skyBox.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_skyBox.SetScale(Vector3D(250, 250, 250));
       m_skyBox.SetPosition(Vector3D(-0, 0, 0));
       m_skyBox.UpdateTransform();
@@ -217,7 +248,7 @@ namespace pugaknSDK {
     m_depthCameraRT.Bind();
     Driver::Instance().Clear(0,0,0,1);
     for (auto &it : m_root.m_children) {
-      it->SetShader(&ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader);
+      it->GetRenderComponent().m_shader = (&ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader);
       it->Draw();
     }
     for (size_t i = 0; i < 6; i++)
@@ -225,7 +256,7 @@ namespace pugaknSDK {
       CameraManager::Instance().SetActualCamera(m_cubeCameras[i]);
       m_cubeRT.BindCubeMap(i);
       for (auto &it : m_root.m_children) {
-        it->SetShader(&ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader);
+        it->GetRenderComponent().m_shader =  (&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);
         it->Draw();
       }
       glCullFace(GL_BACK);
@@ -243,18 +274,24 @@ namespace pugaknSDK {
     m_skyBox.Draw();
     glCullFace(GL_FRONT);
     Int32 i = 0;
+
+    m_cube.m_textures[1] = (m_depthCameraRT.m_depthTexture.get());
+    m_cube.m_textures[2] = (m_cubeRT.m_textures[0].get());
+
+    m_quad.m_textures[1] = (m_depthCameraRT.m_depthTexture.get());
+    m_quad.m_textures[2] = (m_cubeRT.m_textures[0].get());
+
+
     for (auto &it : m_root.m_children) {
       if (i == 0) { //4
         Shader* shReflect = &ResourceManager::GetResourceT<ShaderResource>("vs_reflect.glsl")->m_shader;
-        it->SetShader(shReflect);
+        it->GetRenderComponent().m_shader =  (shReflect);
       }
       else {
-        it->SetShader(&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);
+        it->GetRenderComponent().m_shader = (&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);
       }
 
       //it->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      it->m_textures[1] = (m_depthCameraRT.m_depthTexture.get());
-      it->m_textures[2] = (m_cubeRT.m_textures[0].get());
       it->Draw();
       i++;
     }

@@ -10,7 +10,7 @@ namespace pugaknSDK {
   class Sphere : public IRenderableObject {
   public:
     void Init() override;
-    void Draw(const Matrix4D& transform, const std::vector<Texture*>& _textures, Shader* _shader) override;
+    void Draw(const Matrix4D& transform) override;
     void Destroy() override;
   private:
     UInt32 m_index[36];

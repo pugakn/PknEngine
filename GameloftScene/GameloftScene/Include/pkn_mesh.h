@@ -15,34 +15,23 @@ namespace pugaknSDK {
     {
       GLuint shadersID;
       GLuint	IB;
-      //Textures
-      short diffuseText1ID;
-      short GlossText2ID;
-      short NormalText3ID;
-      short SpecularText4ID;
-      std::vector<Shader*> m_shaderSet;
-      GLint IdCubeLoc;
+      std::vector<Texture*> textures;
       unsigned long sig;
       SubsetInfo() {
         sig = 0;
-        diffuseText1ID = -1;
-        GlossText2ID = -1;
-        NormalText3ID = -1;
-        SpecularText4ID = -1;
       }
     };
     struct MeshInfo
     {
       std::vector<SubsetInfo> subsetInfo;
-      GLuint	 VB;
-      std::vector<Vertex> m_vboOriginal;
+      GLuint VB;
     };
     std::vector<MeshInfo> m_meshInfo;
 
     MeshParser parser;
     std::string m_filename;
     void Init() override;
-    void Draw(const Matrix4D& transform, const std::vector<Texture*>& _textures, Shader* _shader) override;
+    void Draw(const Matrix4D& transform) override;
     void Destroy() override;
   private:
   };

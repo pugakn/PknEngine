@@ -9,7 +9,7 @@ namespace pugaknSDK {
   void GameObject::Draw()
   {
     PKN_ASSERT(m_renderComponent);//
-    m_renderComponent->Draw(m_transform, m_textures, m_shader);
+    m_renderComponent->Draw(m_transform);
   }
 
   void GameObject::Destroy()
@@ -45,15 +45,14 @@ namespace pugaknSDK {
   {
     m_renderComponent = _renderComponent;
   }
-  void GameObject::SetShader(Shader * _shader)
+  IRenderableObject & GameObject::GetRenderComponent()
   {
-    m_shader = _shader;
+    return *m_renderComponent;
   }
-  void GameObject::AddChild(IRenderableObject * _renderComponent, Shader* _shader)
+  void GameObject::AddChild(IRenderableObject * _renderComponent)
   {
     m_children.push_back(std::make_shared<GameObject>());
     m_children.back()->SetRenderComponent(_renderComponent);
-    m_children.back()->SetShader(_shader);
   }
 }
 

@@ -105,6 +105,12 @@
     <ClCompile Include="Source\pkn_mesh_parser.cpp">
       <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\pkn_res_model.cpp">
+      <Filter>Archivos de origen\Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pkn_renderable.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\pkn_defines.h">
@@ -175,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="Include\pkn_mesh_parser.h">
       <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\pkn_res_model.h">
+      <Filter>Archivos de encabezado\Engine\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

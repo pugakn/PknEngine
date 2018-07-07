@@ -21,12 +21,12 @@ namespace pugaknSDK {
     void UpdateTransform();
 
     void SetRenderComponent(IRenderableObject* _renderComponent);
-    void SetShader(Shader* _shader);
-    void AddChild(IRenderableObject* _renderComponent, Shader* _shader);
+    IRenderableObject& GetRenderComponent();
+    void AddChild(IRenderableObject* _renderComponent);
     std::vector<std::shared_ptr<GameObject>> m_children;
-    std::vector<Texture*> m_textures;
+
+
   private:
-    Shader* m_shader;
     Vector3D m_position;
     Vector3D m_rotation;
     Vector3D m_scale;

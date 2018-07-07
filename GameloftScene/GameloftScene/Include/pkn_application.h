@@ -49,7 +49,6 @@ namespace pugaknSDK {
     static void IdleFunction();
     Quad m_quad;
     Cube m_cube;
-    Mesh m_model;
   private:
     //Private constructor as this is a Module class
     GameObject m_root;

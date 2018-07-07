@@ -29,23 +29,23 @@ namespace pugaknSDK {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(UInt32), m_index, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   }
-  void Quad::Draw(const Matrix4D& transform, const std::vector<Texture*>& _textures, Shader* _shader)
+  void Quad::Draw(const Matrix4D& transform)
   {
     glBindBuffer(GL_ARRAY_BUFFER, m_VB);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IB);
 
-    _shader->Bind(sizeof(Vertex), transform);
+    m_shader->Bind(sizeof(Vertex), transform);
 
     size_t i = 0;
-    Int32* ptr = &_shader->m_textures.tex0;
-    for (auto &it : _textures)
+    Int32* ptr = &m_shader->m_textures.tex0;
+    for (auto &it : m_textures)
     {
       it->Bind(*ptr, i++);
       ptr++;
     }
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-    for (size_t i = 0; i < _textures.size(); i++)
+    for (size_t i = 0; i < m_textures.size(); i++)
     {
       glActiveTexture(GL_TEXTURE0 + i);
       glBindTexture(GL_TEXTURE_2D, 0);
