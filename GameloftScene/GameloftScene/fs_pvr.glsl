@@ -41,21 +41,16 @@ vec3 CalculateLight(vec3 lightPos, vec3 lightColor,vec3 albedo,vec3 specularColo
 }
 
 void main(){
-	Norm = normalize(Norm);
-    vec3 AmbientColor = vec3(0.05,0.05,0.05);
+	//Norm = normalize(Norm);
+    vec3 AmbientColor = vec3(0.1,0.1,0.1);
 	vec3 Albedo = texture2D(tex0,vecUVCoords).xyz;
-	vec3 I = normalize(WorldPos - CameraPosition);
-    vec3 R = reflect(I, Norm);
-	vec3 Env = textureCube(tex2,R).xyz;
-
-	vec3 lightPos = vec3(0,50,50);
     vec3 eyeDir = normalize(CameraPosition - WorldPos).xyz;
-	vec3 SpecularColor = vec3(1,1,1);
+	vec3 SpecularColor = vec3(1,1,1) *0.2;
 
 	vec4 Final = vec4(0,0,0,0);
 	vec3 Ambient = AmbientColor * Albedo;
 	for (int i = 0; i < 2; ++i){
-	   Final += CalculateLight(LightPositions[i],LightColors[i], Albedo, vec3(1,1,1), eyeDir, LightRadius[i]).xyzx;
+	   Final += CalculateLight(LightPositions[i],LightColors[i], Albedo, SpecularColor, eyeDir, LightRadius[i]).xyzx;
 	}
 	
 
@@ -87,7 +82,7 @@ void main(){
 			//End Shadow Map ========================
 
 	Final.w = 1.0;
-	gl_FragColor =  vec4(Final.xyz,1);
+	gl_FragColor =  vec4(Final.xyz + Ambient.xyz,1);
 	//gl_FragColor = Norm.xyzx;
 }
 

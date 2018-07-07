@@ -73,7 +73,7 @@ namespace pugaknSDK {
     ResourceManager::LoadResource("test.tga");
     ResourceManager::LoadResource("diffuse_TGA_DXT5_1.dds");
     ResourceManager::LoadResource("ahriFire.x");
-    ResourceManager::LoadResource("ahri.x");
+    ResourceManager::LoadResource("Vi.x");
     ResourceManager::LoadResource("Darius.x");
     ResourceManager::LoadResource("Jinx.x");
 
@@ -94,12 +94,12 @@ namespace pugaknSDK {
     Driver::Instance().BindBackBufferFBO();
 
     m_cubeCameras.resize(6);
-    m_cubeCameras[0].Init(Vector3D(0, 10, 0), Vector3D(0, ToRadian(90), 0),false,90);
-    m_cubeCameras[1].Init(Vector3D(0, 10, 0), Vector3D(0, ToRadian(-90), 0), false,90);
-    m_cubeCameras[2].Init(Vector3D(0, 10, 0), Vector3D(0, ToRadian(0), ToRadian(90)), false, 90);
-    m_cubeCameras[3].Init(Vector3D(0, 10, 0), Vector3D(0, ToRadian(0), ToRadian(-90)), false, 90);
-    m_cubeCameras[4].Init(Vector3D(0, 10, 0), Vector3D(ToRadian(0), ToRadian(180), 0), false,90);
-    m_cubeCameras[5].Init(Vector3D(0, 10, 0), Vector3D(ToRadian(0), ToRadian(0), 0), false,90);
+    m_cubeCameras[0].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(90), 0),false,90);
+    m_cubeCameras[1].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(-90), 0), false,90);
+    m_cubeCameras[2].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(0), ToRadian(90)), false, 90);
+    m_cubeCameras[3].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(0), ToRadian(-90)), false, 90);
+    m_cubeCameras[4].Init(Vector3D(0, 30, 80), Vector3D(ToRadian(0), ToRadian(180), 0), false,90);
+    m_cubeCameras[5].Init(Vector3D(0, 30, 80), Vector3D(ToRadian(0), ToRadian(0), 0), false,90);
 
     for (size_t i = 0; i < 6; i++)
     {
@@ -120,7 +120,7 @@ namespace pugaknSDK {
     m_cube.Init();
 
     Mesh& mesh = ResourceManager::GetResourceT<ModelResource>("ahriFire.x")->m_mesh;
-    Mesh& ahri = ResourceManager::GetResourceT<ModelResource>("ahri.x")->m_mesh;
+    Mesh& ahri = ResourceManager::GetResourceT<ModelResource>("garen.x")->m_mesh;
     Mesh& darius = ResourceManager::GetResourceT<ModelResource>("Darius.x")->m_mesh;
     Mesh& jinx = ResourceManager::GetResourceT<ModelResource>("Jinx.x")->m_mesh;
 
@@ -152,35 +152,23 @@ namespace pugaknSDK {
       m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
 
       m_root.AddChild(&m_cube);
-      //m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[0]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[0]->SetScale(Vector3D(10, 10, 10));
-      m_root.m_children[0]->SetPosition(Vector3D(0, 10, 0));
+      m_root.m_children[0]->SetScale(Vector3D(20, 20, 20));
+      m_root.m_children[0]->SetPosition(Vector3D(0, 30, 80));
       m_root.m_children[0]->UpdateTransform();
       m_root.AddChild(&m_quad);
-      //m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[1]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_root.m_children[1]->SetRotation(Vector3D(90, 0, 0));
       m_root.m_children[1]->SetScale(Vector3D(250, 250, 250));
       m_root.m_children[1]->SetPosition(Vector3D(0, 0, 0));
       m_root.m_children[1]->UpdateTransform();
 
       m_root.AddChild(&darius);
-      //m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[2]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_root.m_children[2]->SetScale(Vector3D(1, 1, 1));
-      m_root.m_children[2]->SetPosition(Vector3D(40, 20, 0));
+      m_root.m_children[2]->SetScale(Vector3D(5, 5, 5));
+      m_root.m_children[2]->SetPosition(Vector3D(40, 0, 0));
       m_root.m_children[2]->UpdateTransform();
 
       m_root.AddChild(&jinx);
-      //m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      //m_root.m_children[3]->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_root.m_children[3]->SetScale(Vector3D(1, 1, 1));
-      m_root.m_children[3]->SetPosition(Vector3D(10, 40, 0));
+      m_root.m_children[3]->SetPosition(Vector3D(80, 0, 40));
       m_root.m_children[3]->UpdateTransform();
 
       m_root.AddChild(&mesh);
@@ -190,12 +178,10 @@ namespace pugaknSDK {
 
       m_root.AddChild(&ahri);
       m_root.m_children[5]->SetScale(Vector3D(1, 1, 1));
-      m_root.m_children[5]->SetPosition(Vector3D(-60, 0, 0));
+      m_root.m_children[5]->SetPosition(Vector3D(-80, 0, 0));
       m_root.m_children[5]->UpdateTransform();
 
       m_skyBox.SetRenderComponent(&m_cube);
-      //m_skyBox.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
-      //m_skyBox.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       m_skyBox.SetScale(Vector3D(250, 250, 250));
       m_skyBox.SetPosition(Vector3D(-0, 0, 0));
       m_skyBox.UpdateTransform();
