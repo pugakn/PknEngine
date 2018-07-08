@@ -10,7 +10,14 @@ namespace pugaknSDK {
   };
   class ModelResourceFactory : public ResourceFactory {
   public:
+    /**
+    * Unused
+    */
     void Init() override;
+
+    /**
+    * Supported formats: .x
+    */
     Resource* Load(std::string path, std::string extraPath = "") override;
     bool IsCompatible(std::string ext) override;
   };

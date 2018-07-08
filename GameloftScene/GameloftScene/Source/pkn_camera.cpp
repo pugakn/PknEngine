@@ -40,86 +40,9 @@ namespace pugaknSDK {
   {
     m_position = _position;
   }
-  Matrix4D lookAt(const Vector3D& from, const Vector3D& to, const Vector3D& tmp = Vector3D(0, 1, 0))
+  void Camera::SetTarget(Vector3D _target, Vector3D _up)
   {
-    Matrix4D camToWorld;
-    Vector3D zaxe = to - from;
-    zaxe = Normalize(zaxe);
-
-    Vector3D xaxe;
-    xaxe = Cross3(tmp, zaxe);
-    xaxe = Normalize(xaxe);
-
-    Vector3D yaxe;
-    yaxe = Cross3(zaxe, xaxe);
-
-    camToWorld.m[0][0] = xaxe.x;
-    camToWorld.m[0][1] = yaxe.x;
-    camToWorld.m[0][2] = zaxe.x;
-    camToWorld.m[3][0] = Dot(xaxe, from);
-    camToWorld.m[3][0] = -camToWorld.m[3][0];
-
-    camToWorld.m[1][0] = xaxe.y;
-    camToWorld.m[1][1] = yaxe.y;
-    camToWorld.m[1][2] = zaxe.y;
-    camToWorld.m[3][1] = Dot(yaxe, from);
-    camToWorld.m[3][1] = -camToWorld.m[3][1];
-
-    camToWorld.m[2][0] = xaxe.z;
-    camToWorld.m[2][1] = yaxe.z;
-    camToWorld.m[2][2] = zaxe.z;
-    camToWorld.m[3][2] = Dot(zaxe, from);
-    camToWorld.m[3][2] = -camToWorld.m[3][2];
-
-    camToWorld.m[0][3] = 0.0f;
-    camToWorld.m[1][3] = 0.0f;
-    camToWorld.m[2][3] = 0.0f;
-    camToWorld.m[3][3] = 1.0f;
-
-    return camToWorld;
-  }
-
-  Matrix4D lookAtRH(const Vector3D& from, const Vector3D& to, const Vector3D& tmp = Vector3D(0, 1, 0))
-  {
-    Matrix4D camToWorld;
-    Vector3D zaxe = from - to;
-    zaxe = Normalize(zaxe);
-
-    Vector3D xaxe;
-    xaxe = Cross3(tmp, zaxe);
-    xaxe = Normalize(xaxe);
-
-    Vector3D yaxe;
-    yaxe = Cross3(zaxe, xaxe);
-
-    camToWorld.m[0][0] = xaxe.x;
-    camToWorld.m[0][1] = yaxe.x;
-    camToWorld.m[0][2] = zaxe.x;
-    camToWorld.m[3][0] = Dot(xaxe, from);
-    camToWorld.m[3][0] = -camToWorld.m[3][0];
-
-    camToWorld.m[1][0] = xaxe.y;
-    camToWorld.m[1][1] = yaxe.y;
-    camToWorld.m[1][2] = zaxe.y;
-    camToWorld.m[3][1] = Dot(yaxe, from);
-    camToWorld.m[3][1] = -camToWorld.m[3][1];
-
-    camToWorld.m[2][0] = xaxe.z;
-    camToWorld.m[2][1] = yaxe.z;
-    camToWorld.m[2][2] = zaxe.z;
-    camToWorld.m[3][2] = Dot(zaxe, from);
-    camToWorld.m[3][2] = -camToWorld.m[3][2];
-
-    camToWorld.m[0][3] = 0.0f;
-    camToWorld.m[1][3] = 0.0f;
-    camToWorld.m[2][3] = 0.0f;
-    camToWorld.m[3][3] = 1.0f;
-
-    return camToWorld;
-  }
-  void Camera::SetTarget(Vector3D _target)
-  {
-    m_view = lookAtRH(m_position,_target);
+    m_view = LookAtRH(m_position,_target,_up);
   }
 
   void Camera::Update()

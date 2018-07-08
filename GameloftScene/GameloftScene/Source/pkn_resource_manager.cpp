@@ -5,6 +5,10 @@
 #include "pkn_res_texture.h"
 #include "pkn_res_model.h"
 namespace pugaknSDK {
+  const std::string ResourceManager::ASSETS_PATH = "Assets/";
+  const std::string ResourceManager::TEXTURES_PATH = ASSETS_PATH + "Textures/";
+  const std::string ResourceManager::SHADERS_PATH = ASSETS_PATH + "Shaders/";;
+  const std::string ResourceManager::MODELS_PATH  = ASSETS_PATH + "Models/";;
   void ResourceManager::Init()
   {
     Instance().m_foctories.push_back(std::move(std::make_unique<ShaderResourceFactory>()));

@@ -22,7 +22,15 @@ namespace pugaknSDK {
     static const unsigned long FOURCC_DXT1 = 0x31545844; //(MAKEFOURCC('D','X','T','1'))
     static const unsigned long FOURCC_DXT3 = 0x33545844; //(MAKEFOURCC('D','X','T','3'))
     static const unsigned long FOURCC_DXT5 = 0x35545844; //(MAKEFOURCC('D','X','T','5'))
+
+    /**
+    * Unused
+    */
     void Init() override;
+
+    /**
+    * Supported formats: .dds, .tga
+    */
     Resource* Load(std::string path, std::string extraPath = "") override;
     bool IsCompatible(std::string ext) override;
   };

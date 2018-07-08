@@ -56,9 +56,12 @@ namespace pugaknSDK {
     m_uniforms.WVP = glGetUniformLocation(m_program, "WVP");
     m_uniforms.CameraPosition = glGetUniformLocation(m_program, "CameraPosition");
     m_uniforms.LightVP = glGetUniformLocation(m_program, "LightVP");
+    m_uniforms.View = glGetUniformLocation(m_program, "View");
     m_uniforms.LightPositions = glGetUniformLocation(m_program, "LightPositions");
     m_uniforms.LightColors = glGetUniformLocation(m_program, "LightColors");
     m_uniforms.LightRadius = glGetUniformLocation(m_program, "LightRadius");
+    m_uniforms.LightCameraPosition = glGetUniformLocation(m_program, "LightCameraPosition");
+    
   }
 
   void Shader::Bind(Int32 stride, const Matrix4D& _world)
@@ -75,6 +78,8 @@ namespace pugaknSDK {
       glUniformMatrix4fv(m_uniforms.WVP, 1, GL_FALSE, &WVP.m[0][0]);
     if (m_uniforms.LightVP > -1)
       glUniformMatrix4fv(m_uniforms.LightVP, 1, GL_FALSE, &CameraManager::Instance().m_lights[0]->m_camera.m_vp.m[0][0]);
+    if (m_uniforms.View > -1)
+      glUniformMatrix4fv(m_uniforms.View, 1, GL_FALSE, &CameraManager::Instance().m_lights[0]->m_camera.m_view.m[0][0]);
     if (m_uniforms.CameraPosition > -1)
       glUniform4fv(m_uniforms.CameraPosition, 1, &mCam.m_position.x);
     Vector4D lp[2]{Vector4D( CameraManager::Instance().m_lights[0]->m_camera.m_position,1),Vector4D(CameraManager::Instance().m_lights[1]->m_camera.m_position,1) };
@@ -86,6 +91,9 @@ namespace pugaknSDK {
       glUniform4fv(m_uniforms.LightColors, 2, &lc[0].x);
     if (m_uniforms.LightRadius > -1)
       glUniform4fv(m_uniforms.LightRadius, 2, &lr[0].x);
+    Vector3D v(0, 30, 80);
+    if (m_uniforms.LightCameraPosition > -1)
+      glUniform4fv(m_uniforms.LightCameraPosition, 1, &v.x);
 
 
     glEnableVertexAttribArray(m_attributes.position);

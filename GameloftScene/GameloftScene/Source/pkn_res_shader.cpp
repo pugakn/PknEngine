@@ -12,11 +12,11 @@ namespace pugaknSDK {
     std::stringstream buffer_vs;
     std::stringstream buffer_fs;
 
-    std::ifstream file_vs(path);
+    std::ifstream file_vs(ResourceManager::SHADERS_PATH + path);
     buffer_vs << file_vs.rdbuf();
     res->m_source = buffer_vs.str();
 
-    std::ifstream file_fs(extraPath);
+    std::ifstream file_fs(ResourceManager::SHADERS_PATH + extraPath);
     buffer_fs << file_fs.rdbuf();
     std::string fsource = buffer_fs.str();
 

@@ -7,7 +7,7 @@ namespace pugaknSDK {
     //m_target = _target;
     _rotation.x *= 3.1416f;
     _rotation.y *= 3.1416f;
-    m_camera.Init(_position, _rotation);
+    m_camera.Init(_position, _rotation,true,90);
     m_color = _color;
     m_radius = _radius;
   }

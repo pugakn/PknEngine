@@ -39,6 +39,7 @@
     <ClCompile Include="Source\pkn_texture.cpp" />
     <ClCompile Include="Source\pkn_quad.cpp" />
     <ClCompile Include="Source\pkn_time.cpp" />
+    <ClCompile Include="Source\pkn_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\pkn_application.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Include\pkn_time.h" />
     <ClInclude Include="Include\pkn_quad.h" />
     <ClInclude Include="Include\pkn_types.h" />
+    <ClInclude Include="Include\pkn_utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

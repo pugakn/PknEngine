@@ -16,6 +16,7 @@ namespace pugaknSDK {
   }
   Resource * TextureResourceFactory::Load(std::string path, std::string extraPath)
   {
+    path = ResourceManager::TEXTURES_PATH + path;
     TextureResource* res = new TextureResource();
     res->m_texture = std::make_unique<Texture>();
     bool found = false;

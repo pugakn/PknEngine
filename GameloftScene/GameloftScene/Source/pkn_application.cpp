@@ -68,23 +68,35 @@ namespace pugaknSDK {
     CameraManager::StartUp();
     CameraManager::Instance().Init();
     ResourceManager::LoadResource("vs_quad.glsl", "fs_quad.glsl");
-    ResourceManager::LoadResource("vs_pvr.glsl", "fs_pvr.glsl");
+    ResourceManager::LoadResource("vs_inv_cube.glsl", "fs_light.glsl");
+    ResourceManager::LoadResource("vs_light.glsl", "fs_light.glsl");
     ResourceManager::LoadResource("vs_reflect.glsl", "fs_reflect.glsl");
-    ResourceManager::LoadResource("test.tga");
+    ResourceManager::LoadResource("vs_cube.glsl", "fs_cube.glsl");
+    ResourceManager::LoadResource("wall.tga");
     ResourceManager::LoadResource("diffuse_TGA_DXT5_1.dds");
     ResourceManager::LoadResource("ahriFire.x");
     ResourceManager::LoadResource("Vi.x");
     ResourceManager::LoadResource("Darius.x");
     ResourceManager::LoadResource("Jinx.x");
 
-    m_shadowRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
+    ResourceManager::LoadResource("ahri.x");
+    ResourceManager::LoadResource("sona.x");
+    ResourceManager::LoadResource("grag.x");
+    ResourceManager::LoadResource("garen.x");
+    ResourceManager::LoadResource("Vi.x");
+   // ResourceManager::LoadResource("anie.x");
+
+    
     m_depthCameraRT.Create(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1, w, h);
-    m_cubeRT.CreateCubemap(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32, 1024, 1024);
-    m_sunLight.Init(Vector3D(0, 50, 100),Vector3D(-0.1,2, 0),Vector3D(0.5,0.5,0.5),10000);
-    //m_sunLight.m_camera.SetTarget(Vector3D(0, 0, 0));
-    m_cameraLight.Init(Vector3D(0, 50, 50), Vector3D(ToRadian(45), ToRadian(0), 0), Vector3D(0.7, 0.5, 0.5), 200);
+    m_cubeRT.CreateCubemap(COLOR_FORMAT::RGBA8, DEPTH_FORMAT::R32,1, 1024, 1024);
+    m_sunLight.Init(Vector3D(0, 100, 200),Vector3D(-0.1,2, 0),Vector3D(0.8,0.8,0.8),50000);
+
+    m_cameraLight.Init(Vector3D(0, 3, 120), Vector3D(ToRadian(45), ToRadian(0), 0), Vector3D(0.7, 0.5, 0.5), 200);
     CameraManager::Instance().m_lights.push_back(&m_sunLight);
     CameraManager::Instance().m_lights.push_back(&m_cameraLight);
+
+    m_sunLight.m_camera.m_usingEulerAngles = false;
+    m_sunLight.m_camera.SetTarget(Vector3D(0,20,0),Vector3D(0,1,0));
 
     CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
     CameraManager::Instance().GetMainCamera().Resize(w, h);
@@ -94,24 +106,24 @@ namespace pugaknSDK {
     Driver::Instance().BindBackBufferFBO();
 
     m_cubeCameras.resize(6);
-    m_cubeCameras[0].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(90), 0),false,90);
-    m_cubeCameras[1].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(-90), 0), false,90);
-    m_cubeCameras[2].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(0), ToRadian(90)), false, 90);
-    m_cubeCameras[3].Init(Vector3D(0, 30, 80), Vector3D(0, ToRadian(0), ToRadian(-90)), false, 90);
-    m_cubeCameras[4].Init(Vector3D(0, 30, 80), Vector3D(ToRadian(0), ToRadian(180), 0), false,90);
-    m_cubeCameras[5].Init(Vector3D(0, 30, 80), Vector3D(ToRadian(0), ToRadian(0), 0), false,90);
+    m_cubeCameras[0].Init(Vector3D(0, 30, 200), Vector3D(0, ToRadian(90), 0),false,90);
+    m_cubeCameras[1].Init(Vector3D(0, 30, 200), Vector3D(0, ToRadian(-90), 0), false,90);
+    m_cubeCameras[2].Init(Vector3D(0, 30, 200), Vector3D(0, ToRadian(0), ToRadian(90)), false, 90);
+    m_cubeCameras[3].Init(Vector3D(0, 30, 200), Vector3D(0, ToRadian(0), ToRadian(-90)), false, 90);
+    m_cubeCameras[4].Init(Vector3D(0, 30, 200), Vector3D(ToRadian(0), ToRadian(180), 0), false,90);
+    m_cubeCameras[5].Init(Vector3D(0, 30, 200), Vector3D(ToRadian(0), ToRadian(0), 0), false,90);
 
     for (size_t i = 0; i < 6; i++)
     {
       m_cubeCameras[i].Resize(1024,1024);
     }
 
-    m_cubeCameras[0].SetTarget(m_cubeCameras[0].m_position + Vector3D(10, 0, 0));
-    m_cubeCameras[1].SetTarget(m_cubeCameras[1].m_position + Vector3D(-10, 0, 0));
-    m_cubeCameras[2].SetTarget(m_cubeCameras[2].m_position + Vector3D(0, -10, 0));
-    m_cubeCameras[3].SetTarget(m_cubeCameras[3].m_position + Vector3D(0, 10, 0));
-    m_cubeCameras[4].SetTarget(m_cubeCameras[4].m_position + Vector3D(0, 0, -10));
-    m_cubeCameras[5].SetTarget(m_cubeCameras[5].m_position + Vector3D(0, 0, 10));
+    m_cubeCameras[0].SetTarget(m_cubeCameras[0].m_position + Vector3D(10, 0, 0) , Vector3D(0,-1,0));
+    m_cubeCameras[1].SetTarget(m_cubeCameras[1].m_position + Vector3D(-10, 0, 0), Vector3D(0, -1, 0));
+    m_cubeCameras[2].SetTarget(m_cubeCameras[2].m_position + Vector3D(0, 10, 0), Vector3D(0, 0, -1));
+    m_cubeCameras[3].SetTarget(m_cubeCameras[3].m_position + Vector3D(0, -10, 0),Vector3D(0, 0, -1));
+    m_cubeCameras[4].SetTarget(m_cubeCameras[4].m_position + Vector3D(0, 0, 10),Vector3D(0, -1, 0));
+    m_cubeCameras[5].SetTarget(m_cubeCameras[5].m_position + Vector3D(0, 0, -10),Vector3D(0, -1, 0));
     for (size_t i = 0; i < 6; i++)
     {
       m_cubeCameras[i].Update();
@@ -124,36 +136,56 @@ namespace pugaknSDK {
     Mesh& darius = ResourceManager::GetResourceT<ModelResource>("Darius.x")->m_mesh;
     Mesh& jinx = ResourceManager::GetResourceT<ModelResource>("Jinx.x")->m_mesh;
 
+    Mesh&  ahri2 = ResourceManager::GetResourceT<ModelResource>("ahri.x")->m_mesh;
+    Mesh&  sona = ResourceManager::GetResourceT<ModelResource>("sona.x")->m_mesh;
+    Mesh&  grag = ResourceManager::GetResourceT<ModelResource>("grag.x")->m_mesh;
+    Mesh&  garen = ResourceManager::GetResourceT<ModelResource>("anie.x")->m_mesh;
+    Mesh& vi = ResourceManager::GetResourceT<ModelResource>("Vi.x")->m_mesh;
+
     mesh.m_meshInfo.back().subsetInfo.back().textures.resize(2);
     mesh.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
-
     ahri.m_meshInfo.back().subsetInfo.back().textures.resize(2);
     ahri.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
-
     darius.m_meshInfo.back().subsetInfo.back().textures.resize(2);
     darius.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
-
     jinx.m_meshInfo.back().subsetInfo.back().textures.resize(2);
     jinx.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    ahri2.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    ahri2.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    sona.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    sona.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    grag.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    grag.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    garen.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    garen.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+    vi.m_meshInfo.back().subsetInfo.back().textures.resize(2);
+    vi.m_meshInfo.back().subsetInfo.back().textures[1] = (m_depthCameraRT.m_depthTexture.get());
+
+
     {
       Shader* shBase = &ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader;
-      Shader* shShadow = &ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader;
+      Shader* shShadow = &ResourceManager::GetResourceT<ShaderResource>("vs_light.glsl")->m_shader;
       Shader* shReflect = &ResourceManager::GetResourceT<ShaderResource>("vs_reflect.glsl")->m_shader;
 
       mesh.m_shader = shShadow;
       m_quad.m_shader = shShadow;
       m_cube.m_shader = shShadow;
       m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("diffuse_TGA_DXT5_1.dds")->m_texture.get());
-      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("wall.tga")->m_texture.get());
+      m_quad.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("wall.tga")->m_texture.get());
 
-      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
-      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
+      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("wall.tga")->m_texture.get());
+      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("wall.tga")->m_texture.get());
+      m_cube.m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("wall.tga")->m_texture.get());
 
       m_root.AddChild(&m_cube);
-      m_root.m_children[0]->SetScale(Vector3D(20, 20, 20));
-      m_root.m_children[0]->SetPosition(Vector3D(0, 30, 80));
+      m_root.m_children[0]->SetScale(Vector3D(30, 30, 30));
+      m_root.m_children[0]->SetPosition(Vector3D(0, 30, 200));
       m_root.m_children[0]->UpdateTransform();
       m_root.AddChild(&m_quad);
       m_root.m_children[1]->SetRotation(Vector3D(90, 0, 0));
@@ -180,6 +212,32 @@ namespace pugaknSDK {
       m_root.m_children[5]->SetScale(Vector3D(1, 1, 1));
       m_root.m_children[5]->SetPosition(Vector3D(-80, 0, 0));
       m_root.m_children[5]->UpdateTransform();
+
+      m_root.AddChild(&ahri2);
+      m_root.m_children[6]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[6]->SetPosition(Vector3D(0, 70, 0));
+      m_root.m_children[6]->UpdateTransform();
+
+      m_root.AddChild(&grag);
+      m_root.m_children[7]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[7]->SetPosition(Vector3D(40, 70, 50));
+      m_root.m_children[7]->UpdateTransform();
+
+      m_root.AddChild(&garen);
+      m_root.m_children[8]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[8]->SetPosition(Vector3D(-40, 70, 50));
+      m_root.m_children[8]->UpdateTransform();
+
+      m_root.AddChild(&sona);
+      m_root.m_children[9]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[9]->SetPosition(Vector3D(-120, 0, 50));
+      m_root.m_children[9]->UpdateTransform();
+
+      m_root.AddChild(&vi);
+      m_root.m_children[10]->SetScale(Vector3D(1, 1, 1));
+      m_root.m_children[10]->SetPosition(Vector3D(120, 0, 50));
+      m_root.m_children[10]->UpdateTransform();
+
 
       m_skyBox.SetRenderComponent(&m_cube);
       m_skyBox.SetScale(Vector3D(250, 250, 250));
@@ -222,17 +280,13 @@ namespace pugaknSDK {
       mCam.Update();
     }
     m_cameraLight.m_camera.SetPosition(mCam.m_position);
-    //for (size_t i = 0; i < 6; i++)
-    //{
-    //  m_cubeCameras[i].SetPosition(mCam.m_position);
-    //}
     m_cameraLight.m_camera.Update();
   }
   void Application::Draw()
   {
     CameraManager::Instance().SetActualCamera(m_sunLight.m_camera);
     m_depthCameraRT.Bind();
-    Driver::Instance().Clear(0,0,0,1);
+    //Driver::Instance().Clear(0,0,0,1);
     for (auto &it : m_root.m_children) {
       it->GetRenderComponent().m_shader = (&ResourceManager::GetResourceT<ShaderResource>("vs_quad.glsl")->m_shader);
       it->Draw();
@@ -241,21 +295,33 @@ namespace pugaknSDK {
     {
       CameraManager::Instance().SetActualCamera(m_cubeCameras[i]);
       m_cubeRT.BindCubeMap(i);
+      Int32 index = 0;
       for (auto &it : m_root.m_children) {
-        it->GetRenderComponent().m_shader =  (&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);
-        it->Draw();
+        if (index == 0) {
+        }
+        else {
+          it->GetRenderComponent().m_shader = (&ResourceManager::GetResourceT<ShaderResource>("vs_cube.glsl")->m_shader);
+          it->Draw();
+        }
+        index++;
       }
+      m_cube.SetShader(ResourceManager::GetResourceT<ShaderResource>("vs_inv_cube.glsl")->m_shader);
       glCullFace(GL_BACK);
       m_skyBox.Draw();
       glCullFace(GL_FRONT);
     }
 
+    
+
 
     Driver::Instance().BindBackBufferFBO();
     CameraManager::Instance().SetActualCamera(CameraManager::Instance().GetMainCamera());
     //
-    //CameraManager::Instance().SetActualCamera(m_cubeCameras[0]);
+    //CameraManager::Instance().SetActualCamera(m_sunLight.m_camera);
     Driver::Instance().Clear(0.2,0.2,0.5,1);
+
+    //m_cube.SetShader((ResourceManager::GetResourceT<ShaderResource>("vs_light.glsl")->m_shader));
+    m_cube.SetShader(ResourceManager::GetResourceT<ShaderResource>("vs_inv_cube.glsl")->m_shader);
     glCullFace(GL_BACK);
     m_skyBox.Draw();
     glCullFace(GL_FRONT);
@@ -267,17 +333,14 @@ namespace pugaknSDK {
     m_quad.m_textures[1] = (m_depthCameraRT.m_depthTexture.get());
     m_quad.m_textures[2] = (m_cubeRT.m_textures[0].get());
 
-
     for (auto &it : m_root.m_children) {
-      if (i == 0) { //4
+      if (i == 0) {
         Shader* shReflect = &ResourceManager::GetResourceT<ShaderResource>("vs_reflect.glsl")->m_shader;
         it->GetRenderComponent().m_shader =  (shReflect);
       }
       else {
-        it->GetRenderComponent().m_shader = (&ResourceManager::GetResourceT<ShaderResource>("vs_pvr.glsl")->m_shader);
+        it->GetRenderComponent().m_shader = (&ResourceManager::GetResourceT<ShaderResource>("vs_light.glsl")->m_shader);
       }
-
-      //it->m_textures.push_back(ResourceManager::GetResourceT<TextureResource>("test.tga")->m_texture.get());
       it->Draw();
       i++;
     }
@@ -355,7 +418,7 @@ namespace pugaknSDK {
       m_keyStates[KEYS::RIGHT] = true;
       break;
     case 'e':
-      Driver::Instance().Screenshot("screenshot01.bmp");
+      Driver::Instance().Screenshot("screenshot");
       break;
     }
   }

@@ -10,7 +10,14 @@ namespace pugaknSDK {
   };
   class ShaderResourceFactory : public ResourceFactory {
   public:
+    /**
+    * Unused
+    */
     void Init() override;
+
+    /**
+    * Supported formats: .glsl
+    */
     Resource* Load(std::string path, std::string extraPath = "") override;
     bool IsCompatible(std::string ext) override;
   };

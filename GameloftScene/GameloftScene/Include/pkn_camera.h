@@ -19,7 +19,7 @@ namespace pugaknSDK {
     void Camera::RotateX(float _rotation);
     void Camera::RotateY(float _rotation);
     void SetPosition(Vector3D _position);
-    void SetTarget(Vector3D _target);
+    void SetTarget(Vector3D _target, Vector3D _up = Vector3D(0,-1,0));
 
     float m_rotX;
     float m_rotY;

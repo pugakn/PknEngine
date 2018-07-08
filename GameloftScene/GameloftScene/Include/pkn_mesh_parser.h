@@ -29,23 +29,6 @@ namespace pugaknSDK {
       };
     }
   }
-  //struct vertexStruct {
-  //  float x, y, z, w;
-  //  float nx, ny, nz, nw;
-  //  float tx, ty, tz, tw;
-  //  float bx, by, bz, bw;
-  //  float s, t;
-  //  int wIndex[4];
-  //  float wWeight[4];
-  //  vertexStruct()
-  //  {
-  //    wIndex[0] = -1;
-  //    wIndex[1] = -1;
-  //    wIndex[2] = -1;
-  //    wIndex[3] = -1;
-  //  }
-  //};
-
   struct xBoneWeightInfo
   {
     std::vector<int> boneIndex;
