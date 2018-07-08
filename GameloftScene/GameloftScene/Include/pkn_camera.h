@@ -11,8 +11,17 @@ namespace pugaknSDK {
     const float DEFAULT_NEAR_PLANE = 5.f;
     const float DEFAULT_FOV = 45;
   public:
+    /**
+    * Initializate the camera View and Projection
+    */
     void Init(Vector3D _position, Vector3D _rotation, bool _usingEulerAngles = true, float _fov = 45);
+    /**
+    * Update View
+    */
     void Update();
+    /**
+    * Resize view
+    */
     void Resize(Int32 _w, Int32 _h);
     void Camera::TraslateFront(float _velocity);
     void Camera::TraslateSide(float _velocity);

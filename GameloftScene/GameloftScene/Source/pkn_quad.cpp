@@ -54,6 +54,7 @@ namespace pugaknSDK {
   }
   void Quad::Destroy()
   {
-
+    glDeleteBuffers(1, &m_IB);
+    glDeleteBuffers(1, &m_VB);
   }
 }

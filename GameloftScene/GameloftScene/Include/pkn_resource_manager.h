@@ -38,7 +38,11 @@ namespace pugaknSDK {
   protected:
     std::shared_ptr<Resource> m_defaultResource;
   };
-
+  /**
+  * Module Class do not instantiate!
+  * Use this class for resources management
+  * Usage: ResourceManager::Instance().Init(...);
+  */
   class ResourceManager : public Module<ResourceManager> {
   public:
     /**

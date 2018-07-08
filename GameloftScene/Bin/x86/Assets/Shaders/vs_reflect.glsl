@@ -14,9 +14,10 @@ uniform mat4 WorldView;
 uniform vec4 CameraPosition;
 
 void main(){
+	mat3 m3World = mat3(World);
 	vecUVCoords = Coords;	
 	WorldPos = World*vec4(Position,1);
 	Pos = WVP * vec4(Position,1);
-	Norm = vec4(((mat3)World) * Normal,1);
+	Norm = vec4( normalize(m3World * Normal),1);
 	gl_Position = Pos;
 }

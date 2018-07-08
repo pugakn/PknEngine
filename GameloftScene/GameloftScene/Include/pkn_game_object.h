@@ -9,6 +9,9 @@
 namespace pugaknSDK {
   class Texture;
   class Shader;
+  /**
+  * A class for a renderable object on the scene
+  */
   class GameObject {
   public:
     void Init();

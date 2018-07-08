@@ -156,3 +156,12 @@ void pugaknSDK::RenderTarget::BindCubeMap(Int32 _i)
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+void pugaknSDK::RenderTarget::Destroy()
+{
+  for (int j = 0; j < m_textures.size(); j++) {
+    glDeleteTextures(1, &m_textures[j]->m_id);
+  }
+  glDeleteTextures(1, &m_depthTexture->m_id);
+  glDeleteFramebuffers(1, &m_idList[0]);
+}

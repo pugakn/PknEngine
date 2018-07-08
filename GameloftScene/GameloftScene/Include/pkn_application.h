@@ -38,6 +38,8 @@ namespace pugaknSDK {
     void OnKeyboardAsciiReleased(unsigned char _code, Int32 _x, Int32 _y);
     void OnResize(Int32 _w, Int32 _h);
     
+
+    //GLUT FUNCTIONS
     static void DisplayFunction();
     static void MouseFunction(Int32 _button, Int32 _state, Int32 _x, Int32 _y);
     static void MousePasiveMotionFunction(Int32 _x, Int32 _y);

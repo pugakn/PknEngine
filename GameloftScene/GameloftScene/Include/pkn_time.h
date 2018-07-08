@@ -3,6 +3,9 @@
 #include <chrono>
 
 namespace pugaknSDK {
+  /**
+  * A basic timer
+  */
   class Timer {
   public:
     void Init();
@@ -22,7 +25,9 @@ namespace pugaknSDK {
 
     TimePoint m_start;
   };
-
+  /**
+  * Static class for app time management
+  */
   class Time {
   public:
     static void Init();

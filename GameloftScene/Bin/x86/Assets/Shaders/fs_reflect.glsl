@@ -18,9 +18,9 @@ uniform sampler2D tex1;
 uniform samplerCube tex2;
 
 void main(){
-	Norm = normalize(Norm);
 	vec3 I = normalize(WorldPos - CameraPosition);
     vec3 R = reflect(I, Norm);
+	//R.x = -R.x;
 	vec3 Env = textureCube(tex2,R).xyz;
 	gl_FragColor =  vec4(Env.xyz,1);
 }

@@ -35,8 +35,8 @@ namespace pugaknSDK {
   {
     Matrix4D scale = Scaling(m_scale.x, m_scale.y, m_scale.z);
     Matrix4D rotationX = RotationX(ToRadian(m_rotation.x));
-    Matrix4D rotationY = RotationX(ToRadian(m_rotation.y));
-    Matrix4D rotationZ = RotationX(ToRadian(m_rotation.z));
+    Matrix4D rotationY = RotationY(ToRadian(m_rotation.y));
+    Matrix4D rotationZ = RotationZ(ToRadian(m_rotation.z));
     Matrix4D position = Translation(m_position.x, m_position.y, m_position.z);
     m_transform = scale*rotationX*rotationY*rotationZ*position;
   }

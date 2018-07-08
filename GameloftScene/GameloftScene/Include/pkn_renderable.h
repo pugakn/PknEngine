@@ -13,6 +13,9 @@ namespace pugaknSDK {
     float n1, n2, n3;
     float t1, t2;
   };
+  /**
+  * Base class for renderable objects
+  */
   class IRenderableObject {
   public:
     virtual void Init() = 0;

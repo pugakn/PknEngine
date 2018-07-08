@@ -123,5 +123,7 @@ namespace pugaknSDK {
   }
   void Cube::Destroy()
   {
+    glDeleteBuffers(1, &m_IB);
+    glDeleteBuffers(1, &m_VB);
   }
 }

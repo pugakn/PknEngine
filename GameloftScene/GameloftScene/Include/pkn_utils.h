@@ -10,6 +10,9 @@ namespace pugaknSDK {
     static byte* CreateBitmapFileHeader(Int32 _w, Int32 _h);
     static byte* CreateBitmapInfoHeader(Int32 _w, Int32 _h);
 
+    /**
+    * Save a .bmp from a color buffer
+    */
     static void GenerateBitmapImage(byte *buffer, Int32 _w, Int32 _h, std::string _path);
   };
 }

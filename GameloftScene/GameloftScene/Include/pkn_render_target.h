@@ -27,6 +27,8 @@ namespace pugaknSDK {
     */
     void BindCubeMap(Int32 _i);
 
+    void Destroy();
+
     Int32 m_width;
     Int32 m_height;
     std::vector<std::shared_ptr<Texture>> m_textures;

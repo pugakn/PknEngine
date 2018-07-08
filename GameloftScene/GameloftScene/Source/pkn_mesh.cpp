@@ -89,5 +89,14 @@ namespace pugaknSDK {
   }
   void Mesh::Destroy()
   {
+    for (size_t i = 0; i < parser.m_meshes.size(); i++)
+    {
+      glDeleteBuffers(1, &m_meshInfo[i].VB);
+      for (size_t j = 0; j < parser.m_meshes[i].m_subsets.size(); j++)
+      {
+        SubsetInfo* sIt = &m_meshInfo[i].subsetInfo[j];
+        glDeleteBuffers(1, &sIt->IB);
+      }
+    }
   }
 }
